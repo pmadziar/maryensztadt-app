@@ -1,0 +1,20 @@
+.icon-beer {
+	display: inline-block;
+	background-image: url("../icons/Bavarian Beer Mug.svg");
+	background-size: 100%;
+}
+
+.icon-xxl {
+	width: 300px;
+	height: 300px;
+}
+
+.icon-xl {
+	width: 200px;
+	height: 200px;
+}
+
+.icon-l {
+	width: 100px;
+	height: 100px;
+}
