@@ -4,11 +4,31 @@
   "description": "",
   "main": "server-https.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Running gulp\" && gulp",
+    "watch": "echo \"Running gulp watch\" && gulp watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-compile-handlebars": "^0.6.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-data": "^1.2.1",
+    "gulp-filter": "^4.0.0",
+    "gulp-flatten": "^0.3.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^2.2.0",
+    "moment": "^2.15.2",
+    "normalize-css": "^2.3.1",
+    "normalize-sass": "^1.0.0",
+    "path": "^0.12.7",
+    "susy": "^2.2.12",
+    "typi": "^2.3.0"
   }
 }

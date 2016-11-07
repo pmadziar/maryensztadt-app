@@ -1,16 +1,13 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Version 181 compiled on 2016/11/07 15:57:45</title>
+        {{> metatags}}
+        <title>Version {{version}} compiled on {{date}}</title>
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
 
-        <link rel="stylesheet" href="css/maryensztadt.css">
+        {{> headerCss}}
         <script src="https://use.fontawesome.com/8766569261.js"></script>
     </head>
     <body>
@@ -30,7 +27,7 @@
                 <a href="#03" class="svg-icon svg-icon-beer"></a>
                 <a href="#04" class="svg-icon svg-icon-beer"></a>
             </div>
-            <p>Text: Version 181 compiled on 2016/11/07 15:57:45</p>
+            <p>Text: Version {{version}} compiled on {{date}}</p>
         </div>
     </body>
 </html>

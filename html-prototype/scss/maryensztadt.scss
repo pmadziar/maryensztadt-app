@@ -1,0 +1,59 @@
+@import "normalize";
+@import "susy";
+@import "typi";
+
+// Scss. Clearfix Mixin
+@mixin cf {
+	&:after {
+		content: " ";
+		display: block;
+		clear: both;
+	}
+}
+
+@import "variables";
+@import "colors"; 
+@import "svgicons"; 
+
+html { 
+	font-size: calc(20px + 0.5vmin);
+	margin:0;
+	padding:0;
+	height:100%;
+}
+
+body {
+	background-color: $tigerAmber;
+	margin:0;
+	padding:0;
+	height:100%;
+}
+
+
+.app-container-div {
+	background-color: $appleOrange;
+	max-width: 48rem;
+	height: calc(100% - 1px);
+	margin-left: auto;
+	margin-right: auto;	
+	p {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+	@include cf;
+}
+
+
+.app-topnav-nav {
+	display: block;
+	background-color: $amber;
+	color: $winamp;
+	height: $topnavheight;
+	.fa {
+		padding-top: 0.15*$topnavheight;
+		padding-left: 0.15*$topnavheight;
+		font-size: 0.7*$topnavheight;
+		color: $winamp;
+		text-decoration: none;
+	}
+}

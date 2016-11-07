@@ -1,0 +1,30 @@
+.svg-icons {
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.svg-icon {
+	width: calc(12rem - 7px);
+	height: calc(12rem - 7px);
+	display: inline-block;
+	background-size: 100%;
+	margin: 0;
+	padding: 0;
+
+	@media all and (orientation: portrait) and (max-width: 779px) {
+		width: 49vw;
+		height: 49vw;
+	}
+
+	@media all and (orientation: landscape) and (max-width: 779px) {
+		width: 24vw;
+		height: 24vw;
+	}
+}
+
+.svg-icon-beer {
+	background-image: url("../icons/Bavarian Beer Mug.svg");
+}
