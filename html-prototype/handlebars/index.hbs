@@ -17,16 +17,8 @@
 
 
         <div class="app-container-div">
-            <nav class="app-topnav-nav">
-                <a href="/text.html" title="Home"><i class="fa fa-home"></i></a>
-            </nav>
-
-            <div class="svg-icons">
-                <a href="#01" class="svg-icon svg-icon-beer"></a>
-                <a href="#02" class="svg-icon svg-icon-beer"></a>
-                <a href="#03" class="svg-icon svg-icon-beer"></a>
-                <a href="#04" class="svg-icon svg-icon-beer"></a>
-            </div>
+        {{>topnav "/text.html#01"}}
+        {{>icons this}}
             <p>Text: Version {{version}} compiled on {{date}}</p>
         </div>
     </body>

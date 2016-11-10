@@ -1,8 +1,10 @@
 //variables
 
-//breaking point 48rem = 965px
-$bp: 965px;
+//breaking point 48rem
+$maxwidth: 48rem;
 
 //top nav height
 $topnavheight: 3rem;
 
+// h multiplier
+$hmultiplier: 1.1;

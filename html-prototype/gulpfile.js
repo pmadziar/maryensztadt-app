@@ -11,6 +11,7 @@ const flatten = require('gulp-flatten');
 const moment = require('moment');
 const gulpFilter = require('gulp-filter');
 const livereload = require('gulp-livereload');
+const jsonfile = require('jsonfile')
 
 
 const buildDir = "./dist";
@@ -22,9 +23,10 @@ const projectName = "html-prototype";
 
 
 // update version number and date for HB templates
-let hbData = require("./data.json");
+// let hbData = require("./data.json");
 
 gulp.task('update_version', () => {
+    let hbData = jsonfile.readFileSync("./data.json");
     hbData.date = moment().format("YYYY/MM/DD HH:mm:ss");
     let version = 0;
     if(hbData.version|| hbData.version === 0){
@@ -33,8 +35,7 @@ gulp.task('update_version', () => {
 
     hbData.version = version;
 
-    fs.writeFileSync("./data.json", JSON.stringify(hbData));
-    hbData = require("./data.json");
+    jsonfile.writeFileSync("./data.json", hbData);
 });
 
 var handlebarsHelpers = require("./handlebars/handlebarsHelpers.js");
@@ -75,6 +76,7 @@ gulp.task('handlebars', function () {
         helpers : handlebarsHelpers.functions
     };
 
+    let hbData = jsonfile.readFileSync("./data.json");
 
     return gulp.src('handlebars/*.hbs')
         .pipe(data(function(file) {

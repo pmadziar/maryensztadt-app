@@ -1,0 +1,8 @@
+@import "functions";
+@import "variables";
+
+@for $i from 1 through 6 {
+	h#{$i} {
+	 font-size: pow($hmultiplier, 7 - $i) * 1rem;
+	}
+}
