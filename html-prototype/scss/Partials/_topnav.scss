@@ -1,0 +1,40 @@
+.app-topnav-nav {
+	display: block;
+	width: 100%;
+	background-color: $amber;
+	color: $winamp;
+	height: $topnavheight;
+
+	.fa {
+		color: $winamp;
+		text-decoration: none;
+	}
+
+	nav {
+		display: inline-block;
+		padding-top: 0.25*$topnavheight;
+		padding-left: 0.25*$topnavheight;
+		font-size: 0.5*$topnavheight;
+		color: $winamp;
+		text-decoration: none;
+	}
+
+	nav:nth-child(3){
+		@media all and (max-width: 23rem) {
+			> span.top-nav-hidden-small {
+				display: none;
+			}
+		}
+		@media all and (min-width: 23rem) {
+			float: right;
+			position: relative;
+			left: -18%; /* or right 50% */
+			text-align: left;
+			overflow: hidden;
+		}
+	}
+
+	nav:nth-child(2){
+		float: right;
+	}
+}
