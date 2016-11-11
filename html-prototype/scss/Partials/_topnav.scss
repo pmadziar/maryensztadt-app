@@ -21,12 +21,12 @@
 	}
 
 	nav:nth-child(3){
-		@media all and (max-width: 23rem) {
+		@media all and (max-width: 30rem) {
 			> span.top-nav-hidden-small {
 				display: none;
 			}
 		}
-		@media all and (min-width: 23rem) {
+		@media all and (min-width: 30rem) {
 			float: right;
 			position: relative;
 			left: -18%; /* or right 50% */

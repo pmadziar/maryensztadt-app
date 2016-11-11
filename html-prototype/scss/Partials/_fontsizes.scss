@@ -1,8 +1,13 @@
 @import "functions";
 @import "variables";
 
-@for $i from 1 through 6 {
+@for $i from 1 through 4 {
 	h#{$i} {
-	 font-size: pow($hmultiplier, 7 - $i) * 1rem;
+		font-size: pow($hmultiplier, 5 - $i) * 1rem;
+		line-height: pow($hmultiplier, 5 - $i) * 1rem;
+	  	margin-top: pow($hmultiplier, 5 - $i) * 0.25rem;
+  		margin-bottom: pow($hmultiplier, 5 - $i) * 0.25rem;
+
 	}
 }
+

@@ -94,6 +94,6 @@ gulp.task('default',['sass', 'handlebars']);
 
 gulp.task('watch', function() {
   livereload.listen();
-  gulp.watch(['handlebars/*.hbs', 'handlebars/partials/_*.hbs'], ['update_version', 'handlebars']);
+  gulp.watch('handlebars/**/.hbs', ['update_version', 'handlebars']);
   gulp.watch('scss/**/*.scss', ['update_version', 'handlebars', 'sass']);
 });

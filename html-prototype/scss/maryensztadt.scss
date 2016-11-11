@@ -14,7 +14,7 @@
 @import "colors"; 
 
 html { 
-	font-size: calc(12px + 0.5vw);
+	font-size: calc(16px + 0.5vw);
 	margin:0;
 	padding:0;
 	height:100%;
@@ -53,3 +53,4 @@ body {
 @import "fontsizes";
 @import "topnav";
 @import "svgicons"; 
+@import "badge"; 
