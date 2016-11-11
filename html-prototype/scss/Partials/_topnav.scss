@@ -20,13 +20,14 @@
 		text-decoration: none;
 	}
 
-	nav:nth-child(3){
-		@media all and (max-width: 30rem) {
+	nav:nth-child(4){
+		@media all and (max-width: 35rem) {
 			> span.top-nav-hidden-small {
 				display: none;
 			}
+			font-size: 0.4*$topnavheight;
 		}
-		@media all and (min-width: 30rem) {
+		@media all and (min-width: 35rem) {
 			float: right;
 			position: relative;
 			left: -18%; /* or right 50% */
@@ -35,7 +36,7 @@
 		}
 	}
 
-	nav:nth-child(2){
+	nav:nth-child(3){
 		float: right;
 	}
 }
