@@ -1,21 +1,28 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const srcdir = path.resolve(__dirname, 'src');
+const nodemodulesdir = path.resolve(__dirname, 'node_modules');
+
 module.exports = {
-    entry: [
-        'babel-polyfill',
-        './src/maryensztadt.js'
-    ],
-    output: {
-        path: path.join(__dirname, 'dist'),
-        filename: 'maryensztadt.js'
-    },
     module: {
         loaders: [{
-            test: /\.js[x]?$/,
-            include: path.resolve(__dirname, 'app'),
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-        }]
+                test: /\.js[x]?$/,
+                loader: 'babel-loader',
+                include: [ srcdir ],
+                exclude: [ nodemodulesdir ],
+                query: {
+                    plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties'],
+                    presets: ['latest', 'react'],
+                }
+            }],
+    },
+    entry: [
+        'babel-polyfill',
+        srcdir
+    ],
+    output: {
+        path: path.join(__dirname, 'dist/js'),
+        filename: 'maryensztadt.js'
     }
 }

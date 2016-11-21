@@ -7,9 +7,10 @@
 	a {
 		display: inline-block;
 		background-color: $orange;
-		width: calc(25% - 4px);
+		width: calc(25% - 7px);
 
 		overflow: hidden;
+		margin-right: 4px;
 
 		img {
 			width: 100%;
@@ -44,15 +45,18 @@
 
 	a:nth-child(4n){
 		float: right;
+		margin: 0;
 	}
 
 
 	@media all and (orientation: portrait) and (max-width: $maxwidth) {
 		a {
 			width: calc(50vw - 4px);
+			margin: 0;
 		}
 		a:nth-child(2n){
 			float: right;
+			margin: 0;
 		}
 	}
 

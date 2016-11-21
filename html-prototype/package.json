@@ -24,6 +24,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^2.2.0",
+    "handlebars-intl": "^1.1.2",
     "jsonfile": "^2.4.0",
     "moment": "^2.15.2",
     "normalize-css": "^2.3.1",

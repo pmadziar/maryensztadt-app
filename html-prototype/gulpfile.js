@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const handlebars = require('gulp-compile-handlebars');
+const handlebarsIntl = require('handlebars-intl');
 const rename = require('gulp-rename');
 const concat = require('gulp-concat');
 const data = require('gulp-data');
@@ -21,6 +22,13 @@ const fontDir = buildDir + "/fonts";
 
 const projectName = "html-prototype";
 
+const reactMobxDir = `../react-mobx-prototype`;
+
+
+// register handlebars intl
+handlebarsIntl.registerWith(handlebars.Handlebars);
+
+let intlData = jsonfile.readFileSync("./handlebars/messages.json");
 
 // update version number and date for HB templates
 // let hbData = require("./data.json");
@@ -64,6 +72,7 @@ gulp.task('sass', function() {
         // Writes sourcemaps into the CSS file
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(cssDir))
+        .pipe(gulp.dest(`${reactMobxDir}/dist/css`))
         .pipe(livereload());
 });
 
@@ -81,6 +90,7 @@ gulp.task('handlebars', function () {
     return gulp.src('handlebars/*.hbs')
         .pipe(data(function(file) {
             templateData = hbData;
+            templateData.intl = intlData;
             return templateData;
         }))
         .pipe(handlebars(templateData, options))
