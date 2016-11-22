@@ -1,0 +1,17 @@
+.search-with-sort-container {
+	display: block;
+	width: 100%;
+	height: 2rem;
+	padding-top: 0.3rem;
+
+	input {
+		width: calc(100% - 3rem);
+		margin-left: 0.5rem;
+	}
+
+	a {
+		color: $amber;
+		text-decoration: none;
+	}
+
+}

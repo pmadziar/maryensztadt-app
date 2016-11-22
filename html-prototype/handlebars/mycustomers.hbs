@@ -1,0 +1,27 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        {{> metatags}}
+        <title>Version {{version}} compiled on {{date}}</title>
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        {{> headerCss}}
+        <script src="https://use.fontawesome.com/8766569261.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="page-container-div">
+            <div class="app-container-div">
+            {{>topnav "/text.html#01"}}
+            {{>searchwithsort}}
+            {{>customers this}}
+            <p>Text: Version {{version}} compiled on {{date}}</p>
+            </div>
+        </div>
+    </body>
+</html>

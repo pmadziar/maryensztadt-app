@@ -1,3 +1,5 @@
+//@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 @import "normalize";
 
 // Scss. Clearfix Mixin
@@ -15,6 +17,7 @@
 
 html { 
 	font-size: calc(16px + 0.5vw);
+	font-family: sans-serif;
 	margin:0;
 	padding:0;
 	height:100%;
@@ -62,3 +65,5 @@ body {
 @import "topnav";
 @import "svgicons"; 
 @import "badge"; 
+@import "customerslist"; 
+@import "searchwithsort";

@@ -1,0 +1,18 @@
+.customers-section-container {
+	width: 100%;
+}
+
+.customer-section-container {
+	display: block;
+	width: 100%;
+	height: 2rem;
+	padding-top: 0.3rem;
+	padding-left: 1rem;
+	background-color: $amber;
+	color: $winamp;
+	text-decoration: none;
+	&:nth-child(2n){
+		background-color: $appleOrange;
+		color: $amber;
+	}
+}
