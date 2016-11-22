@@ -4,9 +4,9 @@ class SampleDataService {
 	constructor(){
 		this.data = SampleData;
 	}
-	getActivePagesForCurrentUser = () => {
-		return this.data.icons;
-	}
+	getActivePagesForCurrentUser = () => this.data.icons;
+	
+	getCustomerNamesForCurrentUser = () => this.data.customers;
 }
 
 export default SampleDataService;

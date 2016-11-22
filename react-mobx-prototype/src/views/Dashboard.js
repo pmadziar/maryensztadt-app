@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import MyDataService from "../services/MyDataService";
-import DashboardIcon from "./DashboardIcon";
+import DashboardIcon from "../components/DashboardIcon";
 
 class Dashboard extends Component {
 

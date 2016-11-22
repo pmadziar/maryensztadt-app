@@ -9085,7 +9085,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _AppRouter = __webpack_require__(/*! ./components/AppRouter */ 475);
+	var _AppRouter = __webpack_require__(/*! ./views/AppRouter */ 475);
 	
 	var _AppRouter2 = _interopRequireDefault(_AppRouter);
 	
@@ -30824,9 +30824,9 @@
 
 /***/ },
 /* 475 */
-/*!*************************************!*\
-  !*** ./src/components/AppRouter.js ***!
-  \*************************************/
+/*!********************************!*\
+  !*** ./src/views/AppRouter.js ***!
+  \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30869,6 +30869,10 @@
 	
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 	
+	var _MyCustomers = __webpack_require__(/*! ./MyCustomers */ 627);
+	
+	var _MyCustomers2 = _interopRequireDefault(_MyCustomers);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var AppRouter = function (_Component) {
@@ -30888,7 +30892,8 @@
 	        _react2.default.createElement(
 	          _reactRouter.Route,
 	          { path: '/', component: _App2.default },
-	          _react2.default.createElement(_reactRouter.IndexRoute, { component: _Dashboard2.default })
+	          _react2.default.createElement(_reactRouter.IndexRoute, { component: _Dashboard2.default }),
+	          _react2.default.createElement(_reactRouter.Route, { path: '/mycustomers', component: _MyCustomers2.default })
 	        )
 	      );
 	    }
@@ -37758,9 +37763,9 @@
 
 /***/ },
 /* 617 */
-/*!*******************************!*\
-  !*** ./src/components/App.js ***!
-  \*******************************/
+/*!**************************!*\
+  !*** ./src/views/App.js ***!
+  \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37793,7 +37798,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TopNav = __webpack_require__(/*! ./TopNav */ 618);
+	var _TopNav = __webpack_require__(/*! ../components/TopNav */ 618);
 	
 	var _TopNav2 = _interopRequireDefault(_TopNav);
 	
@@ -37930,9 +37935,9 @@
 
 /***/ },
 /* 619 */
-/*!*************************************!*\
-  !*** ./src/components/Dashboard.js ***!
-  \*************************************/
+/*!********************************!*\
+  !*** ./src/views/Dashboard.js ***!
+  \********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -37969,7 +37974,7 @@
 	
 	var _MyDataService2 = _interopRequireDefault(_MyDataService);
 	
-	var _DashboardIcon = __webpack_require__(/*! ./DashboardIcon */ 626);
+	var _DashboardIcon = __webpack_require__(/*! ../components/DashboardIcon */ 626);
 	
 	var _DashboardIcon2 = _interopRequireDefault(_DashboardIcon);
 	
@@ -38038,6 +38043,10 @@
 	
 		this.getActivePagesForCurrentUser = function () {
 			return _this.__service.getActivePagesForCurrentUser();
+		};
+	
+		this.getCustomerNamesForCurrentUser = function () {
+			return _this.__service.getCustomerNamesForCurrentUser();
 		};
 	
 		this.__service = service;
@@ -38116,6 +38125,10 @@
 			return _this.data.icons;
 		};
 	
+		this.getCustomerNamesForCurrentUser = function () {
+			return _this.data.customers;
+		};
+	
 		this.data = _SampleData2.default;
 	};
 	
@@ -38136,28 +38149,62 @@
 	var SampleData = {
 	  "icons": [{
 	    "text": "Produkty",
-	    "url": "/Produkty",
+	    "url": "/products",
 	    "img": "/icons/Bavarian Beer Mug.svg"
 	  }, {
 	    "text": "Magazyn",
-	    "url": "/Magazyn",
+	    "url": "/warehouse",
 	    "img": "/icons/Beer Keg.svg"
 	  }, {
 	    "text": "Moje zamówienia",
-	    "url": "/MojeZamowienia",
+	    "url": "/myorders",
 	    "img": "/icons/Shopping Cart.svg"
 	  }, {
 	    "text": "Moi klienci",
-	    "url": "/MoiKlienci",
+	    "url": "/mycustomers",
 	    "img": "/icons/User Group Man Man.svg"
 	  }, {
 	    "text": "Zamówienia",
-	    "url": "/Zamowienia",
+	    "url": "/orders",
 	    "img": "/icons/Shopping Cart.svg"
 	  }, {
 	    "text": "Klienci",
-	    "url": "/Klienci",
+	    "url": "/customers",
 	    "img": "/icons/User Group Man Man.svg"
+	  }],
+	  "customers": [{
+	    "id": 1,
+	    "name": "Ag Sp. Z o. o"
+	  }, {
+	    "id": 2,
+	    "name": "Ipsum Donec Sollicitudin Institute"
+	  }, {
+	    "id": 3,
+	    "name": "Augue PC"
+	  }, {
+	    "id": 4,
+	    "name": "Tristique Pellentesque Tellus PC"
+	  }, {
+	    "id": 5,
+	    "name": "Ac Nulla In LLP"
+	  }, {
+	    "id": 6,
+	    "name": "Nunc Commodo Auctor Institute"
+	  }, {
+	    "id": 7,
+	    "name": "Ut Industries"
+	  }, {
+	    "id": 8,
+	    "name": "Facilisis Eget Ipsum Corporation"
+	  }, {
+	    "id": 9,
+	    "name": "Lorem Lorem Luctus Industries"
+	  }, {
+	    "id": 10,
+	    "name": "madziar.com Ltd"
+	  }, {
+	    "id": 11,
+	    "name": "MCS"
 	  }]
 	};
 	
@@ -38235,6 +38282,291 @@
 	    page: _react2.default.PropTypes.object.isRequired
 	}, _temp);
 	exports.default = DashboardIcon;
+
+/***/ },
+/* 627 */
+/*!**********************************!*\
+  !*** ./src/views/MyCustomers.js ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _MyDataService = __webpack_require__(/*! ../services/MyDataService */ 620);
+	
+	var _MyDataService2 = _interopRequireDefault(_MyDataService);
+	
+	var _CustomerNamesList = __webpack_require__(/*! ../components/CustomerNamesList */ 628);
+	
+	var _CustomerNamesList2 = _interopRequireDefault(_CustomerNamesList);
+	
+	var _SearchWithSort = __webpack_require__(/*! ../components/SearchWithSort */ 630);
+	
+	var _SearchWithSort2 = _interopRequireDefault(_SearchWithSort);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MyCustomers = function (_Component) {
+	    (0, _inherits3.default)(MyCustomers, _Component);
+	
+	    function MyCustomers() {
+	        (0, _classCallCheck3.default)(this, MyCustomers);
+	        return (0, _possibleConstructorReturn3.default)(this, (MyCustomers.__proto__ || (0, _getPrototypeOf2.default)(MyCustomers)).apply(this, arguments));
+	    }
+	
+	    (0, _createClass3.default)(MyCustomers, [{
+	        key: "render",
+	        value: function render() {
+	            var customerNames = _MyDataService2.default.getCustomerNamesForCurrentUser();
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(_SearchWithSort2.default, null),
+	                _react2.default.createElement(_CustomerNamesList2.default, { customers: customerNames })
+	            );
+	        }
+	    }]);
+	    return MyCustomers;
+	}(_react.Component);
+	
+	exports.default = MyCustomers;
+
+/***/ },
+/* 628 */
+/*!*********************************************!*\
+  !*** ./src/components/CustomerNamesList.js ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _class, _temp;
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 562);
+	
+	var _CustomerNameLink = __webpack_require__(/*! ./CustomerNameLink */ 629);
+	
+	var _CustomerNameLink2 = _interopRequireDefault(_CustomerNameLink);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var CustomerNamesList = (_temp = _class = function (_Component) {
+	    (0, _inherits3.default)(CustomerNamesList, _Component);
+	
+	    function CustomerNamesList() {
+	        (0, _classCallCheck3.default)(this, CustomerNamesList);
+	        return (0, _possibleConstructorReturn3.default)(this, (CustomerNamesList.__proto__ || (0, _getPrototypeOf2.default)(CustomerNamesList)).apply(this, arguments));
+	    }
+	
+	    (0, _createClass3.default)(CustomerNamesList, [{
+	        key: "render",
+	        value: function render() {
+	            var customers = this.props.customers;
+	            return _react2.default.createElement(
+	                "section",
+	                { className: "customers-section-container" },
+	                customers.map(function (customer, index) {
+	                    return _react2.default.createElement(_CustomerNameLink2.default, { customer: customer, key: customer.id });
+	                })
+	            );
+	        }
+	    }]);
+	    return CustomerNamesList;
+	}(_react.Component), _class.propTypes = {
+	    customers: _react2.default.PropTypes.array.isRequired
+	}, _temp);
+	exports.default = CustomerNamesList;
+
+/***/ },
+/* 629 */
+/*!********************************************!*\
+  !*** ./src/components/CustomerNameLink.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _class, _temp;
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 562);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var CustomerNameLink = (_temp = _class = function (_Component) {
+	    (0, _inherits3.default)(CustomerNameLink, _Component);
+	
+	    function CustomerNameLink() {
+	        (0, _classCallCheck3.default)(this, CustomerNameLink);
+	        return (0, _possibleConstructorReturn3.default)(this, (CustomerNameLink.__proto__ || (0, _getPrototypeOf2.default)(CustomerNameLink)).apply(this, arguments));
+	    }
+	
+	    (0, _createClass3.default)(CustomerNameLink, [{
+	        key: "render",
+	        value: function render() {
+	            var customer = this.props.customer;
+	            var linkto = "/customers/" + customer.id;
+	            return _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: linkto, className: "customer-section-container" },
+	                customer.name
+	            );
+	        }
+	    }]);
+	    return CustomerNameLink;
+	}(_react.Component), _class.propTypes = {
+	    customer: _react2.default.PropTypes.object.isRequired
+	}, _temp);
+	exports.default = CustomerNameLink;
+
+/***/ },
+/* 630 */
+/*!******************************************!*\
+  !*** ./src/components/SearchWithSort.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var SearchWithSort = function (_Component) {
+	    (0, _inherits3.default)(SearchWithSort, _Component);
+	
+	    function SearchWithSort() {
+	        (0, _classCallCheck3.default)(this, SearchWithSort);
+	        return (0, _possibleConstructorReturn3.default)(this, (SearchWithSort.__proto__ || (0, _getPrototypeOf2.default)(SearchWithSort)).apply(this, arguments));
+	    }
+	
+	    (0, _createClass3.default)(SearchWithSort, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "span",
+	                { className: "search-with-sort-container" },
+	                _react2.default.createElement("input", { type: "text", name: "search", placeholder: "\uD83D\uDD0E Search.." }),
+	                "\xA0 ",
+	                _react2.default.createElement("a", { className: "fa fa-sort-alpha-asc", href: "javascript:alert('Clickety click 1'); return false;" }),
+	                "\xA0 ",
+	                _react2.default.createElement("a", { className: "fa fa-sort-alpha-desc", href: "javascript:alert('Clickety click 2'); return false;" })
+	            );
+	        }
+	    }]);
+	    return SearchWithSort;
+	}(_react.Component);
+	
+	exports.default = SearchWithSort;
 
 /***/ }
 /******/ ]);

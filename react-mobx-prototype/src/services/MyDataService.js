@@ -7,6 +7,7 @@ class MyDataService {
 		this.__service = service;
 	}
 	getActivePagesForCurrentUser = () => this.__service.getActivePagesForCurrentUser();	
+	getCustomerNamesForCurrentUser = () => this.__service.getCustomerNamesForCurrentUser();	
 }
 
 const instance = new MyDataService(dataService);
