@@ -2,7 +2,6 @@
     display: block;
     width: calc(100%-2px);
     overflow: hidden;
-    min-height: calc(100vh - 20px);
     
     .tabs-conent-container {
         display: block;
@@ -17,33 +16,6 @@
             min-height: 3rem;
         }
     }
-    .tab:checked:nth-of-type(1) ~ .tabs-conent-container > .tab-content:nth-child(1) {
-        box-sizing: border-box;
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        padding-right: 2rem;
-    }
-    .tab:checked:nth-of-type(2) ~ .tabs-conent-container > .tab-content:nth-child(2) {
-        box-sizing: border-box;
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        padding-right: 2rem;
-    }
-    .tab:checked:nth-of-type(3) ~ .tabs-conent-container > .tab-content:nth-child(3) {
-        box-sizing: border-box;
-        display: block;
-        width: 100%;
-        padding: 1rem;
-        padding-right: 2rem;
-    }
-    .tab:checked:nth-of-type(4) ~ .tabs-conent-container > .tab-content:nth-child(4) {
-        box-sizing: border-box;
-        display: block;
-        width: 100%;
-        padding: 1rem;
-    }
     .tab {
         display: none;
         position: absolute;
@@ -52,15 +24,26 @@
     }
     > label {
         display: inline-block;
-        width: 23%;
-        font-size: 1.23rem;
+        width: calc(25% - 0.22rem);
+        font-size: 1.26562rem;
         text-align: center;
         color: lightgray;
         margin: 0;
         padding: 0.2rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
 
     @for $i from 1 through 4 {
+        .tab:checked:nth-of-type(#{$i}) ~ .tabs-conent-container > .tab-content:nth-child(#{$i}) {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            padding: 0;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
         .tab:checked:nth-of-type(#{$i}) ~ label:nth-of-type(#{$i}) {
             color: $winamp;
             background-color: $orange;
