@@ -38328,10 +38328,6 @@
 	
 	var _CustomerNamesList2 = _interopRequireDefault(_CustomerNamesList);
 	
-	var _SearchWithSort = __webpack_require__(/*! ../components/SearchWithSort */ 630);
-	
-	var _SearchWithSort2 = _interopRequireDefault(_SearchWithSort);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var MyCustomers = function (_Component) {
@@ -38349,7 +38345,6 @@
 	            return _react2.default.createElement(
 	                "div",
 	                null,
-	                _react2.default.createElement(_SearchWithSort2.default, null),
 	                _react2.default.createElement(_CustomerNamesList2.default, { customers: customerNames })
 	            );
 	        }
@@ -38404,26 +38399,73 @@
 	
 	var _CustomerNameLink2 = _interopRequireDefault(_CustomerNameLink);
 	
+	var _SearchWithSort = __webpack_require__(/*! ../components/SearchWithSort */ 630);
+	
+	var _SearchWithSort2 = _interopRequireDefault(_SearchWithSort);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var CustomerNamesList = (_temp = _class = function (_Component) {
 	    (0, _inherits3.default)(CustomerNamesList, _Component);
 	
-	    function CustomerNamesList() {
+	    function CustomerNamesList(props) {
 	        (0, _classCallCheck3.default)(this, CustomerNamesList);
-	        return (0, _possibleConstructorReturn3.default)(this, (CustomerNamesList.__proto__ || (0, _getPrototypeOf2.default)(CustomerNamesList)).apply(this, arguments));
+	
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (CustomerNamesList.__proto__ || (0, _getPrototypeOf2.default)(CustomerNamesList)).call(this, props));
+	
+	        _this.sortf = function (sort) {
+	            if (_this.state.sort !== sort) {
+	                _this.setState({ sort: sort });
+	            }
+	        };
+	
+	        _this.filterf = function (filter) {
+	            var filterLowerCase = filter.toLowerCase();
+	            if (_this.state.filter !== filterLowerCase) {
+	                _this.setState({ filter: filterLowerCase });
+	            }
+	        };
+	
+	        _this.state = {
+	            customers: _this.props.customers,
+	            sort: null,
+	            filter: null
+	        };
+	        return _this;
 	    }
 	
 	    (0, _createClass3.default)(CustomerNamesList, [{
 	        key: "render",
 	        value: function render() {
-	            var customers = this.props.customers;
+	            var state = this.state;
+	            var customers = state.customers;
+	            if (state.filter !== null && state.filter !== '') {
+	                customers = customers.filter(function (cust) {
+	                    return cust.name.toLowerCase().indexOf(state.filter) > -1;
+	                });
+	            }
+	            if (state.sort !== null) {
+	                (function () {
+	                    var dir = state.sort === "ASC" ? 1 : -1;
+	                    customers.sort(function (a, b) {
+	                        var res = a.name.localeCompare(b.name);
+	                        res *= dir;
+	                        return res;
+	                    });
+	                })();
+	            }
+	
 	            return _react2.default.createElement(
-	                "section",
-	                { className: "customers-section-container" },
-	                customers.map(function (customer, index) {
-	                    return _react2.default.createElement(_CustomerNameLink2.default, { customer: customer, key: customer.id });
-	                })
+	                "div",
+	                null,
+	                _react2.default.createElement(_SearchWithSort2.default, { sortFunc: this.sortf, filterFunc: this.filterf }),
+	                _react2.default.createElement(
+	                    "section",
+	                    { className: "customers-section-container" },
+	                    customers.map(function (customer, index) {
+	                        return _react2.default.createElement(_CustomerNameLink2.default, { customer: customer, key: customer.id });
+	                    })
+	                )
 	            );
 	        }
 	    }]);
@@ -38509,7 +38551,7 @@
   \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -38535,38 +38577,117 @@
 	
 	var _inherits3 = _interopRequireDefault(_inherits2);
 	
+	var _class, _temp;
+	
 	var _react = __webpack_require__(/*! react */ 299);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _helpers = __webpack_require__(/*! ../helpers */ 631);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var SearchWithSort = function (_Component) {
+	var SearchWithSort = (_temp = _class = function (_Component) {
 	    (0, _inherits3.default)(SearchWithSort, _Component);
 	
-	    function SearchWithSort() {
+	    function SearchWithSort(props) {
 	        (0, _classCallCheck3.default)(this, SearchWithSort);
-	        return (0, _possibleConstructorReturn3.default)(this, (SearchWithSort.__proto__ || (0, _getPrototypeOf2.default)(SearchWithSort)).apply(this, arguments));
+	
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (SearchWithSort.__proto__ || (0, _getPrototypeOf2.default)(SearchWithSort)).call(this, props));
+	
+	        _this.filter = '';
+	
+	        _this.sortAscClicked = function () {
+	            _this.refs.aasc.style.color = "#FFBF00";
+	            _this.refs.adesc.style.color = '';
+	            (0, _helpers.setCaretAtEnd)(_this.refs.inputText);
+	            _this.props.sortFunc("ASC");
+	            return false;
+	        };
+	
+	        _this.sortDescClicked = function () {
+	            _this.refs.aasc.style.color = '';
+	            _this.refs.adesc.style.color = "#FFBF00";
+	            (0, _helpers.setCaretAtEnd)(_this.refs.inputText);
+	            _this.props.sortFunc("DESC");
+	            return false;
+	        };
+	
+	        _this.filterKeyPressed = function (e) {
+	            console.log("Key Pressed");
+	            // if ESC pressed then clear the filter
+	            if (e.keyCode === 27) {
+	                _this.refs.inputText.value = '';
+	                _this.filterChanged(e);
+	            }
+	        };
+	
+	        _this.filterChanged = function (e) {
+	            console.log("Changed");
+	            var val = _this.refs.inputText.value;
+	            if (val !== _this.filter) {
+	                _this.filter = val;
+	                _this.props.filterFunc(_this.filter);
+	            }
+	        };
+	
+	        return _this;
 	    }
 	
 	    (0, _createClass3.default)(SearchWithSort, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "span",
-	                { className: "search-with-sort-container" },
-	                _react2.default.createElement("input", { type: "text", name: "search", placeholder: "\uD83D\uDD0E Search.." }),
-	                "\xA0 ",
-	                _react2.default.createElement("a", { className: "fa fa-sort-alpha-asc", href: "javascript:alert('Clickety click 1'); return false;" }),
-	                "\xA0 ",
-	                _react2.default.createElement("a", { className: "fa fa-sort-alpha-desc", href: "javascript:alert('Clickety click 2'); return false;" })
+	                'span',
+	                { className: 'search-with-sort-container' },
+	                _react2.default.createElement('input', { type: 'text', name: 'search', placeholder: '\uD83D\uDD0E Search..', ref: 'inputText', onKeyUp: this.filterKeyPressed, onChange: this.filterChanged }),
+	                '\xA0 ',
+	                _react2.default.createElement('a', { className: 'fa fa-sort-alpha-asc', onClick: this.sortAscClicked, ref: 'aasc' }),
+	                '\xA0 ',
+	                _react2.default.createElement('a', { className: 'fa fa-sort-alpha-desc', onClick: this.sortDescClicked, ref: 'adesc' })
 	            );
 	        }
 	    }]);
 	    return SearchWithSort;
-	}(_react.Component);
-	
+	}(_react.Component), _class.propTypes = {
+	    sortFunc: _react2.default.PropTypes.func.isRequired,
+	    filterFunc: _react2.default.PropTypes.func.isRequired
+	}, _temp);
 	exports.default = SearchWithSort;
+
+/***/ },
+/* 631 */
+/*!******************************!*\
+  !*** ./src/helpers/index.js ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.setCaretAtEnd = setCaretAtEnd;
+	function setCaretAtEnd(elem) {
+	    var elemLen = elem.value.length;
+	    // For IE Only
+	    if (document.selection) {
+	        // Set focus
+	        elem.focus();
+	        // Use IE Ranges
+	        var oSel = document.selection.createRange();
+	        // Reset position to 0 & then set at end
+	        oSel.moveStart('character', -elemLen);
+	        oSel.moveStart('character', elemLen);
+	        oSel.moveEnd('character', 0);
+	        oSel.select();
+	    } else if (elem.selectionStart || elem.selectionStart === 0) {
+	        // Firefox/Chrome
+	        elem.selectionStart = elemLen;
+	        elem.selectionEnd = elemLen;
+	        elem.focus();
+	    } // if
+	}
 
 /***/ }
 /******/ ]);
