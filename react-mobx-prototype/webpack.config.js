@@ -24,5 +24,10 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist/js'),
         filename: 'maryensztadt.js'
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+        })
+    ]
 }

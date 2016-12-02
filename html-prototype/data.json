@@ -1,1 +1,110 @@
-{"date":"2016/11/23 06:53:37","version":619,"icons":[{"text":"Produkty","url":"#01","img":"icons/Bavarian Beer Mug.svg"},{"text":"Magazyn","url":"#02","img":"icons/Beer Keg.svg"},{"text":"Moje zamówienia","url":"#03","img":"icons/Shopping Cart.svg"},{"text":"Moi klienci","url":"/mycustomers.html","img":"icons/User Group Man Man.svg"},{"text":"Zamówienia","url":"#05","img":"icons/Shopping Cart.svg"},{"text":"Klienci","url":"#06","img":"icons/User Group Man Man.svg"}],"customers":[{"id":1,"name":"Ag Sp. Z o. o"},{"id":2,"name":"Ipsum Donec Sollicitudin Institute"},{"id":3,"name":"Augue PC"},{"id":4,"name":"Tristique Pellentesque Tellus PC"},{"id":5,"name":"Ac Nulla In LLP"},{"id":6,"name":"Nunc Commodo Auctor Institute"},{"id":7,"name":"Ut Industries"},{"id":8,"name":"Facilisis Eget Ipsum Corporation"},{"id":9,"name":"Lorem Lorem Luctus Industries"},{"id":10,"name":"madziar.com Ltd"},{"id":11,"name":"MCS"}]}
+{
+  "date": "2016/11/23 17:45:01",
+  "version": 620,
+  "icons": [
+    {
+      "text": "Produkty",
+      "url": "#01",
+      "img": "icons/Bavarian Beer Mug.svg"
+    },
+    {
+      "text": "Magazyn",
+      "url": "#02",
+      "img": "icons/Beer Keg.svg"
+    },
+    {
+      "text": "Moje zamówienia",
+      "url": "#03",
+      "img": "icons/Shopping Cart.svg"
+    },
+    {
+      "text": "Moi klienci",
+      "url": "/mycustomers.html",
+      "img": "icons/User Group Man Man.svg"
+    },
+    {
+      "text": "Zamówienia",
+      "url": "#05",
+      "img": "icons/Shopping Cart.svg"
+    },
+    {
+      "text": "Klienci",
+      "url": "#06",
+      "img": "icons/User Group Man Man.svg"
+    }
+  ],
+  "customers": [
+    {
+      "id": 1,
+      "name": "Ag Sp. Z o. o"
+    },
+    {
+      "id": 2,
+      "name": "Ipsum Donec Sollicitudin Institute"
+    },
+    {
+      "id": 3,
+      "name": "Augue PC"
+    },
+    {
+      "id": 4,
+      "name": "Tristique Pellentesque Tellus PC"
+    },
+    {
+      "id": 5,
+      "name": "Ac Nulla In LLP"
+    },
+    {
+      "id": 6,
+      "name": "Nunc Commodo Auctor Institute"
+    },
+    {
+      "id": 7,
+      "name": "Ut Industries"
+    },
+    {
+      "id": 8,
+      "name": "Facilisis Eget Ipsum Corporation"
+    },
+    {
+      "id": 9,
+      "name": "Lorem Lorem Luctus Industries"
+    },
+    {
+      "id": 10,
+      "name": "madziar.com Ltd"
+    },
+    {
+      "id": 11,
+      "name": "MCS"
+    }
+  ],
+  "customerDetails": {
+    "name": "Agro Sp. z o. o",
+    "street": "ul. Nadwodna",
+    "houseAndAptNo": "13",
+    "postCode": "00-956",
+    "city": "Warszawa",
+    "state": "mazowieckie",
+    "NIP": "980-02-03-234",
+    "typeOfLicense": "Handlowa",
+    "primaryContactName": "Jan Kowalski",
+    "primaryContactEmail": "jan.kowalski@agro.com.pl",
+    "primaryContactTelNo": "777-555-33-22",
+    "deliveryAddresses": [],
+    "notes": [
+      {
+        "date": "2016-05-23",
+        "content": "Ala ma kota"
+      }
+    ],
+    "historyOfContacts": [
+      {
+        "contactType": "Phone Call",
+        "date": "2016-05-23",
+        "content": "Ala ma kota"
+      }
+    ],
+    "orders": []
+  }
+}

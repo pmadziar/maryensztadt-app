@@ -38660,6 +38660,37 @@
 /*!******************************!*\
   !*** ./src/helpers/index.js ***!
   \******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _setCaretAtEnd = __webpack_require__(/*! ./setCaretAtEnd */ 632);
+	
+	Object.defineProperty(exports, 'setCaretAtEnd', {
+	  enumerable: true,
+	  get: function get() {
+	    return _setCaretAtEnd.setCaretAtEnd;
+	  }
+	});
+	
+	var _getMongoIdString = __webpack_require__(/*! ./getMongoIdString */ 633);
+	
+	Object.defineProperty(exports, 'getMongoIdString', {
+	  enumerable: true,
+	  get: function get() {
+	    return _getMongoIdString.getMongoIdString;
+	  }
+	});
+
+/***/ },
+/* 632 */
+/*!**************************************!*\
+  !*** ./src/helpers/setCaretAtEnd.js ***!
+  \**************************************/
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38688,6 +38719,30 @@
 	        elem.focus();
 	    } // if
 	}
+
+/***/ },
+/* 633 */
+/*!*****************************************!*\
+  !*** ./src/helpers/getMongoIdString.js ***!
+  \*****************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var getMongoIdString = exports.getMongoIdString = function getMongoIdString(machineid, userid) {
+		var bytes1 = 256;
+		var bytes2 = 65536;
+		var bytes3 = 16777216;
+		var dateStr = Math.floor(Date.now() / 1000).toString(16);
+		var machineidStr = ("000000" + ((machineid || 0) % bytes3).toString(16)).slice(-6);
+		var useridStr = ("0000" + ((userid || 0) % bytes2).toString(16)).slice(-4);
+		var rnd = ("000000" + Math.random(0, bytes3 - 1).toString(16)).slice(-6);
+	
+		return '' + dateStr + machineidStr + useridStr + rnd;
+	};
 
 /***/ }
 /******/ ]);
