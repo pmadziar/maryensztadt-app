@@ -48,7 +48,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(/*! babel-polyfill */1);
-	module.exports = __webpack_require__(/*! /usr/app/dev/Projects/maryensztadt-app/react-mobx-prototype/src */298);
+	module.exports = __webpack_require__(/*! /usr/app/dev/Projects/maryensztadt-app/react-mobx-prototype/src/client */298);
 
 
 /***/ },
@@ -9070,9 +9070,9 @@
 
 /***/ },
 /* 298 */
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/*!*****************************!*\
+  !*** ./src/client/index.js ***!
+  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30824,9 +30824,9 @@
 
 /***/ },
 /* 475 */
-/*!********************************!*\
-  !*** ./src/views/AppRouter.js ***!
-  \********************************/
+/*!***************************************!*\
+  !*** ./src/client/views/AppRouter.js ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37763,9 +37763,9 @@
 
 /***/ },
 /* 617 */
-/*!**************************!*\
-  !*** ./src/views/App.js ***!
-  \**************************/
+/*!*********************************!*\
+  !*** ./src/client/views/App.js ***!
+  \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37830,9 +37830,9 @@
 
 /***/ },
 /* 618 */
-/*!**********************************!*\
-  !*** ./src/components/TopNav.js ***!
-  \**********************************/
+/*!*****************************************!*\
+  !*** ./src/client/components/TopNav.js ***!
+  \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -37935,9 +37935,9 @@
 
 /***/ },
 /* 619 */
-/*!********************************!*\
-  !*** ./src/views/Dashboard.js ***!
-  \********************************/
+/*!***************************************!*\
+  !*** ./src/client/views/Dashboard.js ***!
+  \***************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38009,9 +38009,9 @@
 
 /***/ },
 /* 620 */
-/*!***************************************!*\
-  !*** ./src/services/MyDataService.js ***!
-  \***************************************/
+/*!**********************************************!*\
+  !*** ./src/client/services/MyDataService.js ***!
+  \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38095,9 +38095,9 @@
 
 /***/ },
 /* 624 */
-/*!*******************************************!*\
-  !*** ./src/services/SampleDataService.js ***!
-  \*******************************************/
+/*!**************************************************!*\
+  !*** ./src/client/services/SampleDataService.js ***!
+  \**************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38110,7 +38110,7 @@
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _SampleData = __webpack_require__(/*! ../SampleData */ 625);
+	var _SampleData = __webpack_require__(/*! ../../common/tests/SampleData */ 625);
 	
 	var _SampleData2 = _interopRequireDefault(_SampleData);
 	
@@ -38136,85 +38136,100 @@
 
 /***/ },
 /* 625 */
-/*!***************************!*\
-  !*** ./src/SampleData.js ***!
-  \***************************/
+/*!****************************************!*\
+  !*** ./src/common/tests/SampleData.js ***!
+  \****************************************/
 /***/ function(module, exports) {
 
-	"use strict";
+	const SampleData = {
+	  "icons": [
+	    {
+	      "text": "Produkty",
+	      "url": "/products",
+	      "img": "/icons/Bavarian Beer Mug.svg"
+	    },
+	    {
+	      "text": "Magazyn",
+	      "url": "/warehouse",
+	      "img": "/icons/Beer Keg.svg"
+	    },
+	    {
+	      "text": "Moje zamówienia",
+	      "url": "/myorders",
+	      "img": "/icons/Shopping Cart.svg"
+	    },
+	    {
+	      "text": "Moi klienci",
+	      "url": "/mycustomers",
+	      "img": "/icons/User Group Man Man.svg"
+	    },
+	    {
+	      "text": "Zamówienia",
+	      "url": "/orders",
+	      "img": "/icons/Shopping Cart.svg"
+	    },
+	    {
+	      "text": "Klienci",
+	      "url": "/customers",
+	      "img": "/icons/User Group Man Man.svg"
+	    }
+	  ],
+	  "customers": [
+	    {
+	      "id": 1,
+	      "name": "Ag Sp. Z o. o"
+	    },
+	    {
+	      "id": 2,
+	      "name": "Ipsum Donec Sollicitudin Institute"
+	    },
+	    {
+	      "id": 3,
+	      "name": "Augue PC"
+	    },
+	    {
+	      "id": 4,
+	      "name": "Tristique Pellentesque Tellus PC"
+	    },
+	    {
+	      "id": 5,
+	      "name": "Ac Nulla In LLP"
+	    },
+	    {
+	      "id": 6,
+	      "name": "Nunc Commodo Auctor Institute"
+	    },
+	    {
+	      "id": 7,
+	      "name": "Ut Industries"
+	    },
+	    {
+	      "id": 8,
+	      "name": "Facilisis Eget Ipsum Corporation"
+	    },
+	    {
+	      "id": 9,
+	      "name": "Lorem Lorem Luctus Industries"
+	    },
+	    {
+	      "id": 10,
+	      "name": "madziar.com Ltd"
+	    },
+	    {
+	      "id": 11,
+	      "name": "MCS"
+	    }
+	  ]  
+	}
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var SampleData = {
-	  "icons": [{
-	    "text": "Produkty",
-	    "url": "/products",
-	    "img": "/icons/Bavarian Beer Mug.svg"
-	  }, {
-	    "text": "Magazyn",
-	    "url": "/warehouse",
-	    "img": "/icons/Beer Keg.svg"
-	  }, {
-	    "text": "Moje zamówienia",
-	    "url": "/myorders",
-	    "img": "/icons/Shopping Cart.svg"
-	  }, {
-	    "text": "Moi klienci",
-	    "url": "/mycustomers",
-	    "img": "/icons/User Group Man Man.svg"
-	  }, {
-	    "text": "Zamówienia",
-	    "url": "/orders",
-	    "img": "/icons/Shopping Cart.svg"
-	  }, {
-	    "text": "Klienci",
-	    "url": "/customers",
-	    "img": "/icons/User Group Man Man.svg"
-	  }],
-	  "customers": [{
-	    "id": 1,
-	    "name": "Ag Sp. Z o. o"
-	  }, {
-	    "id": 2,
-	    "name": "Ipsum Donec Sollicitudin Institute"
-	  }, {
-	    "id": 3,
-	    "name": "Augue PC"
-	  }, {
-	    "id": 4,
-	    "name": "Tristique Pellentesque Tellus PC"
-	  }, {
-	    "id": 5,
-	    "name": "Ac Nulla In LLP"
-	  }, {
-	    "id": 6,
-	    "name": "Nunc Commodo Auctor Institute"
-	  }, {
-	    "id": 7,
-	    "name": "Ut Industries"
-	  }, {
-	    "id": 8,
-	    "name": "Facilisis Eget Ipsum Corporation"
-	  }, {
-	    "id": 9,
-	    "name": "Lorem Lorem Luctus Industries"
-	  }, {
-	    "id": 10,
-	    "name": "madziar.com Ltd"
-	  }, {
-	    "id": 11,
-	    "name": "MCS"
-	  }]
-	};
-	
-	exports.default = SampleData;
+	export default SampleData;
+
 
 /***/ },
 /* 626 */
-/*!*****************************************!*\
-  !*** ./src/components/DashboardIcon.js ***!
-  \*****************************************/
+/*!************************************************!*\
+  !*** ./src/client/components/DashboardIcon.js ***!
+  \************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38285,9 +38300,9 @@
 
 /***/ },
 /* 627 */
-/*!**********************************!*\
-  !*** ./src/views/MyCustomers.js ***!
-  \**********************************/
+/*!*****************************************!*\
+  !*** ./src/client/views/MyCustomers.js ***!
+  \*****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38356,9 +38371,9 @@
 
 /***/ },
 /* 628 */
-/*!*********************************************!*\
-  !*** ./src/components/CustomerNamesList.js ***!
-  \*********************************************/
+/*!****************************************************!*\
+  !*** ./src/client/components/CustomerNamesList.js ***!
+  \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38477,9 +38492,9 @@
 
 /***/ },
 /* 629 */
-/*!********************************************!*\
-  !*** ./src/components/CustomerNameLink.js ***!
-  \********************************************/
+/*!***************************************************!*\
+  !*** ./src/client/components/CustomerNameLink.js ***!
+  \***************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38546,9 +38561,9 @@
 
 /***/ },
 /* 630 */
-/*!******************************************!*\
-  !*** ./src/components/SearchWithSort.js ***!
-  \******************************************/
+/*!*************************************************!*\
+  !*** ./src/client/components/SearchWithSort.js ***!
+  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38657,9 +38672,9 @@
 
 /***/ },
 /* 631 */
-/*!******************************!*\
-  !*** ./src/helpers/index.js ***!
-  \******************************/
+/*!*************************************!*\
+  !*** ./src/client/helpers/index.js ***!
+  \*************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38688,9 +38703,9 @@
 
 /***/ },
 /* 632 */
-/*!**************************************!*\
-  !*** ./src/helpers/setCaretAtEnd.js ***!
-  \**************************************/
+/*!*********************************************!*\
+  !*** ./src/client/helpers/setCaretAtEnd.js ***!
+  \*********************************************/
 /***/ function(module, exports) {
 
 	'use strict';
@@ -38722,9 +38737,9 @@
 
 /***/ },
 /* 633 */
-/*!*****************************************!*\
-  !*** ./src/helpers/getMongoIdString.js ***!
-  \*****************************************/
+/*!************************************************!*\
+  !*** ./src/client/helpers/getMongoIdString.js ***!
+  \************************************************/
 /***/ function(module, exports) {
 
 	"use strict";

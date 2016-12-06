@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const srcdir = path.resolve(__dirname, 'src');
+const srcdir = path.resolve(__dirname,'src/client');
 const nodemodulesdir = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
         srcdir
     ],
     output: {
-        path: path.join(__dirname, 'dist/js'),
+        path: path.resolve(__dirname, 'build/client/js'),
         filename: 'maryensztadt.js'
     },
     plugins: [

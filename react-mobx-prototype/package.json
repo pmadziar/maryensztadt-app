@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint ./src",
-    "build": "webpack -d",
-    "watch": "webpack -d --watch"
+    "build": "webpack -d --config ./webpack.client-config.js",
+    "watch": "webpack -d --config ./webpack.client-config.js --watch"
   },
   "author": "",
   "license": "ISC",
