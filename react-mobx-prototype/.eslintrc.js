@@ -1,6 +1,7 @@
 module.exports = {
     "env": {
         "browser": true,
+        "node": true,
         "commonjs": true,
         "es6": true
     },
@@ -10,21 +11,18 @@ module.exports = {
         "react"
     ],
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
         "linebreak-style": [
             "error",
             "windows"
         ],
         "quotes": [
             "error",
-            "single"
+            "backtick"
         ],
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-console": 0
     }
 };

@@ -38110,7 +38110,7 @@
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _SampleData = __webpack_require__(/*! ../../common/tests/SampleData */ 625);
+	var _SampleData = __webpack_require__(/*! ../../lib/tests/SampleData */ 625);
 	
 	var _SampleData2 = _interopRequireDefault(_SampleData);
 	
@@ -38136,9 +38136,9 @@
 
 /***/ },
 /* 625 */
-/*!****************************************!*\
-  !*** ./src/common/tests/SampleData.js ***!
-  \****************************************/
+/*!*************************************!*\
+  !*** ./src/lib/tests/SampleData.js ***!
+  \*************************************/
 /***/ function(module, exports) {
 
 	const SampleData = {

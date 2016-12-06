@@ -1,0 +1,32 @@
+use Maryensztadt;
+
+// drop customers collection
+db.customers.drop()
+
+// create collection with polish collation
+db.createCollection('customers', { 'collation' : {'locale' : 'pl', strength: 2, caseLevel: false }})
+
+
+
+Import data from JSON:
+mongoimport --db Maryensztadt --collection customers --type json --file ./Customers.json --jsonArray
+
+use Maryensztadt;
+db.customers.createIndex({Name:1}, { 'collation' : {'locale' : 'pl', strength: 2, caseLevel: false }})
+db.customers.createIndex({NIP:1})
+
+
+
+// Set first contact primary to true
+db.customers.update({}, {$set: { 
+	'Contact.0.Primary': true
+}}, {"multi" : true});
+
+
+//Set seller to 
+db.customers.update({}, {$set: {Seller:"pmadziar@madziar.com"}},{multi:true});
+
+
+
+
+

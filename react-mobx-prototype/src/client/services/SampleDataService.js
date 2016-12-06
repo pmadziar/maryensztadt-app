@@ -1,4 +1,4 @@
-import SampleData from "../../common/tests/SampleData";
+import SampleData from "../../lib/tests/SampleData";
 
 class SampleDataService {
 	constructor(){
