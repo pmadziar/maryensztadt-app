@@ -66,8 +66,24 @@ export const getDocuments = (collectionName, filter, limit, skip, sort, project)
     });
 };
 
-export const getDocumentById = (db, collectionName, id) => {
-    return getDocuments(db, collectionName, {
-        _id: new ObjectID(id)
+export const getDocumentById = (collectionName, id) => {
+    return new Promise((resolve, reject)=>{
+        try {
+            if(!id || id===``){
+                throw new Error(`The id parameter is mandatory`);
+            }
+            getDocuments(collectionName, {_id: new ObjectID(id)})
+            .then((docs)=>{
+                if(docs && docs.length === 1){
+                    resolve(docs[0]);
+                } else {
+                    reject(new Error(`The document wuth id: ${id} doesn't exist`));
+                }
+            }).catch((error)=>{
+                reject(error);
+            });
+        } catch (error) {
+            reject(error);
+        }
     });
 };

@@ -73,7 +73,10 @@
 	                console.log(element);
 	            });
 	        });
-	
+	        return (0, _queryservice.getDocumentById)("customers", "58482575fc13ae13f9000256");
+	    }).then(function (doc) {
+	        console.log(doc);
+	    }).then(function () {
 	        (0, _dbpromise.closeDb)();
 	    }).catch(function (error) {
 	        console.log("Error");
@@ -183,9 +186,24 @@
 	    });
 	};
 	
-	var getDocumentById = exports.getDocumentById = function getDocumentById(db, collectionName, id) {
-	    return getDocuments(db, collectionName, {
-	        _id: new _mongodb.ObjectID(id)
+	var getDocumentById = exports.getDocumentById = function getDocumentById(collectionName, id) {
+	    return new _promise2.default(function (resolve, reject) {
+	        try {
+	            if (!id || id === '') {
+	                throw new Error('The id parameter is mandatory');
+	            }
+	            getDocuments(collectionName, { _id: new _mongodb.ObjectID(id) }).then(function (docs) {
+	                if (docs && docs.length === 1) {
+	                    resolve(docs[0]);
+	                } else {
+	                    reject(new Error('The document wuth id: ' + id + ' doesn\'t exist'));
+	                }
+	            }).catch(function (error) {
+	                reject(error);
+	            });
+	        } catch (error) {
+	            reject(error);
+	        }
 	    });
 	};
 

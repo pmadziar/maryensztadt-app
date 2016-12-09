@@ -1,10 +1,7 @@
-import {getDocuments} from './dataservices/queryservice';
+import {getDocuments, getDocumentById} from './dataservices/queryservice';
 import {closeDb} from "./dataservices/dbpromise";
 
 console.log(`It's alive`);
-
-
-
 
 (()=>{
     let docs1 = getDocuments(`customers`, {Name: /^ł/i }, undefined, undefined, { Name: 1 }, {_id: 1, Name: 1}); 
@@ -19,7 +16,10 @@ console.log(`It's alive`);
                 console.log(element);
             });
         });
-
+        return getDocumentById(`customers`,`58482575fc13ae13f9000256`);
+    }).then((doc)=>{
+        console.log(doc);
+    }).then(()=>{
         closeDb();
     }).catch((error) => {
         console.log(`Error`);
