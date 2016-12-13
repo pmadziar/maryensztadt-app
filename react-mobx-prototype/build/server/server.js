@@ -116,15 +116,23 @@
 	var staticDir = _path2.default.join(process.cwd(), 'build/client');
 	console.log('Static dir is: ' + staticDir);
 	app.use('/', (0, _helmet2.default)());
-	app.use('/', (0, _compression2.default)({ level: 9 }));
+	app.use('/', (0, _compression2.default)({
+	  level: 9
+	}));
 	app.use('/', _express2.default.static(staticDir));
 	
 	// define /api API
 	// configure app to use bodyParser()
 	// this will let us get the data from a POST
-	app.use('/api', (0, _helmet2.default)({ noCache: true }));
-	app.use('/api', (0, _compression2.default)({ level: 6 }));
-	app.use('/api', _bodyParser2.default.urlencoded({ extended: true }));
+	app.use('/api', (0, _helmet2.default)({
+	  noCache: true
+	}));
+	app.use('/api', (0, _compression2.default)({
+	  level: 6
+	}));
+	app.use('/api', _bodyParser2.default.urlencoded({
+	  extended: true
+	}));
 	app.use('/api', _bodyParser2.default.json());
 	
 	app.get('/api/mycustomers', _middleware.getCustomersHandler);
@@ -212,7 +220,7 @@
 	  }
 	});
 	
-	var _getCustomerByIdHandler = __webpack_require__(/*! ./getCustomerByIdHandler */ 14);
+	var _getCustomerByIdHandler = __webpack_require__(/*! ./getCustomerByIdHandler */ 15);
 	
 	Object.defineProperty(exports, "getCustomerByIdHandler", {
 	  enumerable: true,
@@ -392,13 +400,17 @@
 	});
 	exports.closeDb = undefined;
 	
+	var _freeze = __webpack_require__(/*! babel-runtime/core-js/object/freeze */ 13);
+	
+	var _freeze2 = _interopRequireDefault(_freeze);
+	
 	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 10);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
 	var _mongodb = __webpack_require__(/*! mongodb */ 11);
 	
-	var _config = __webpack_require__(/*! ../config */ 13);
+	var _config = __webpack_require__(/*! ../config */ 14);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
@@ -424,10 +436,20 @@
 	    });
 	};
 	
+	(0, _freeze2.default)(db);
 	exports.default = db;
 
 /***/ },
 /* 13 */
+/*!******************************************************!*\
+  !*** external "babel-runtime/core-js/object/freeze" ***!
+  \******************************************************/
+/***/ function(module, exports) {
+
+	module.exports = require("babel-runtime/core-js/object/freeze");
+
+/***/ },
+/* 14 */
 /*!************************************!*\
   !*** ./src/server/config/index.js ***!
   \************************************/
@@ -445,7 +467,7 @@
 	exports.default = config;
 
 /***/ },
-/* 14 */
+/* 15 */
 /*!*********************************************************!*\
   !*** ./src/server/middleware/getCustomerByIdHandler.js ***!
   \*********************************************************/
@@ -466,11 +488,7 @@
 	        console.log('Id is: ' + customerId);
 	
 	        (0, _queryservice.getDocumentById)('customers', customerId).then(function (data) {
-	            if (data) {
-	                res.json(data);
-	            } else {
-	                res.status(404).send('Not Found'); //404 Not Found
-	            }
+	            res.json(data);
 	        }).catch(function (error) {
 	            res.status(500).send('Internal Server Error: ' + error); //500 Internal Server Error
 	        });
