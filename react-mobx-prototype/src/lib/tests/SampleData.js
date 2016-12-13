@@ -1,82 +1,82 @@
-const SampleData = {
+export const SampleData = {
   "icons": [
     {
-      "text": "Produkty",
-      "url": "/products",
-      "img": "/icons/Bavarian Beer Mug.svg"
+      "text": `Produkty`,
+      "url": `/products`,
+      "img": `/icons/Bavarian Beer Mug.svg`
     },
     {
-      "text": "Magazyn",
-      "url": "/warehouse",
-      "img": "/icons/Beer Keg.svg"
+      "text": `Magazyn`,
+      "url": `/warehouse`,
+      "img": `/icons/Beer Keg.svg`
     },
     {
-      "text": "Moje zamówienia",
-      "url": "/myorders",
-      "img": "/icons/Shopping Cart.svg"
+      "text": `Moje zamówienia`,
+      "url": `/myorders`,
+      "img": `/icons/Shopping Cart.svg`
     },
     {
-      "text": "Moi klienci",
-      "url": "/mycustomers",
-      "img": "/icons/User Group Man Man.svg"
+      "text": `Moi klienci`,
+      "url": `/mycustomers`,
+      "img": `/icons/User Group Man Man.svg`
     },
     {
-      "text": "Zamówienia",
-      "url": "/orders",
-      "img": "/icons/Shopping Cart.svg"
+      "text": `Zamówienia`,
+      "url": `/orders`,
+      "img": `/icons/Shopping Cart.svg`
     },
     {
-      "text": "Klienci",
-      "url": "/customers",
-      "img": "/icons/User Group Man Man.svg"
+      "text": `Klienci`,
+      "url": `/customers`,
+      "img": `/icons/User Group Man Man.svg`
     }
   ],
   "customers": [
     {
-      "id": 1,
-      "name": "Ag Sp. Z o. o"
+      "_id": 1,
+      "Name": `Ag Sp. Z o. o`
     },
     {
-      "id": 2,
-      "name": "Ipsum Donec Sollicitudin Institute"
+      "_id": 2,
+      "Name": `Ipsum Donec Sollicitudin Institute`
     },
     {
-      "id": 3,
-      "name": "Augue PC"
+      "_id": 3,
+      "Name": `Augue PC`
     },
     {
-      "id": 4,
-      "name": "Tristique Pellentesque Tellus PC"
+      "_id": 4,
+      "Name": `Tristique Pellentesque Tellus PC`
     },
     {
-      "id": 5,
-      "name": "Ac Nulla In LLP"
+      "_id": 5,
+      "Name": `Ac Nulla In LLP`
     },
     {
-      "id": 6,
-      "name": "Nunc Commodo Auctor Institute"
+      "_id": 6,
+      "Name": `Nunc Commodo Auctor Institute`
     },
     {
-      "id": 7,
-      "name": "Ut Industries"
+      "_id": 7,
+      "Name": `Ut Industries`
     },
     {
-      "id": 8,
-      "name": "Facilisis Eget Ipsum Corporation"
+      "_id": 8,
+      "Name": `Facilisis Eget Ipsum Corporation`
     },
     {
-      "id": 9,
-      "name": "Lorem Lorem Luctus Industries"
+      "_id": 9,
+      "Name": `Lorem Lorem Luctus Industries`
     },
     {
-      "id": 10,
-      "name": "madziar.com Ltd"
+      "_id": 10,
+      "Name": `madziar.com Ltd`
     },
     {
-      "id": 11,
-      "name": "MCS"
+      "_id": 11,
+      "Name": `MCS`
     }
   ]  
-}
+};
 
 export default SampleData;

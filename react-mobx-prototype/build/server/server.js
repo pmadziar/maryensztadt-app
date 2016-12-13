@@ -47,57 +47,210 @@
   \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
-	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 1);
+	var _express = __webpack_require__(/*! express */ 1);
 	
-	var _promise2 = _interopRequireDefault(_promise);
+	var _express2 = _interopRequireDefault(_express);
 	
-	var _queryservice = __webpack_require__(/*! ./dataservices/queryservice */ 2);
+	var _bodyParser = __webpack_require__(/*! body-parser */ 2);
 	
-	var _dbpromise = __webpack_require__(/*! ./dataservices/dbpromise */ 4);
+	var _bodyParser2 = _interopRequireDefault(_bodyParser);
+	
+	var _morgan = __webpack_require__(/*! morgan */ 3);
+	
+	var _morgan2 = _interopRequireDefault(_morgan);
+	
+	var _helmet = __webpack_require__(/*! helmet */ 4);
+	
+	var _helmet2 = _interopRequireDefault(_helmet);
+	
+	var _path = __webpack_require__(/*! path */ 5);
+	
+	var _path2 = _interopRequireDefault(_path);
+	
+	var _compression = __webpack_require__(/*! compression */ 6);
+	
+	var _compression2 = _interopRequireDefault(_compression);
+	
+	var _middleware = __webpack_require__(/*! ./middleware */ 7);
+	
+	var _dbpromise = __webpack_require__(/*! ./dataservices/dbpromise */ 12);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	console.log("It's alive");
+	//(()=>{
+	//    let docs1 = getDocuments(`customers`, {Name: /^ł/i }, undefined, undefined, { Name: 1 }, {_id: 1, Name: 1}); 
+	//    let docs2 = getDocuments(`customers`, {Name: /^ż/i }, undefined, undefined, { Name: 1 }, {_id: 1, Name: 1});
+	//
+	//    Promise.all([docs1, docs2])
+	//    .then((dataa) => {
+	//        console.log(`Got Data`);
+	//
+	//        dataa.forEach((data)=>{
+	//            data.forEach((element) => {
+	//                console.log(element);
+	//            });
+	//        });
+	//        return getDocumentById(`customers`,`58482575fc13ae13f9000256`);
+	//    }).then((doc)=>{
+	//        console.log(doc);
+	//    }).then(()=>{
+	//        closeDb();
+	//    }).catch((error) => {
+	//        console.log(`Error`);
+	//        console.log(error);
+	//        closeDb();
+	//    });
+	//})();
 	
-	(function () {
-	    var docs1 = (0, _queryservice.getDocuments)("customers", { Name: /^ł/i }, undefined, undefined, { Name: 1 }, { _id: 1, Name: 1 });
-	    var docs2 = (0, _queryservice.getDocuments)("customers", { Name: /^ż/i }, undefined, undefined, { Name: 1 }, { _id: 1, Name: 1 });
 	
-	    _promise2.default.all([docs1, docs2]).then(function (dataa) {
-	        console.log("Got Data");
+	var app = (0, _express2.default)();
+	app.use((0, _morgan2.default)('combined'));
 	
-	        dataa.forEach(function (data) {
-	            data.forEach(function (element) {
-	                console.log(element);
-	            });
-	        });
-	        return (0, _queryservice.getDocumentById)("customers", "58482575fc13ae13f9000256");
-	    }).then(function (doc) {
-	        console.log(doc);
-	    }).then(function () {
-	        (0, _dbpromise.closeDb)();
-	    }).catch(function (error) {
-	        console.log("Error");
-	        console.log(error);
-	        (0, _dbpromise.closeDb)();
-	    });
-	})();
+	// Define the port to run on
+	app.set('port', 80);
+	app.set('ip', '0.0.0.0');
 	
-	console.log("It's dead");
+	// define static paths
+	var staticDir = _path2.default.join(process.cwd(), 'build/client');
+	console.log('Static dir is: ' + staticDir);
+	app.use('/', (0, _helmet2.default)());
+	app.use('/', (0, _compression2.default)({ level: 9 }));
+	app.use('/', _express2.default.static(staticDir));
+	
+	// define /api API
+	// configure app to use bodyParser()
+	// this will let us get the data from a POST
+	app.use('/api', (0, _helmet2.default)({ noCache: true }));
+	app.use('/api', (0, _compression2.default)({ level: 6 }));
+	app.use('/api', _bodyParser2.default.urlencoded({ extended: true }));
+	app.use('/api', _bodyParser2.default.json());
+	
+	app.get('/api/mycustomers', _middleware.getCustomersHandler);
+	app.get('/api/mycustomers/:id', _middleware.getCustomerByIdHandler);
+	
+	// Listen for requests
+	var server = app.listen(app.get('port'), app.get('ip'), function () {
+	  var port = server.address().port;
+	  console.log('Listening on port ' + port);
+	});
 
 /***/ },
 /* 1 */
-/*!************************************************!*\
-  !*** external "babel-runtime/core-js/promise" ***!
-  \************************************************/
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
 /***/ function(module, exports) {
 
-	module.exports = require("babel-runtime/core-js/promise");
+	module.exports = require("express");
 
 /***/ },
 /* 2 */
+/*!******************************!*\
+  !*** external "body-parser" ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	module.exports = require("body-parser");
+
+/***/ },
+/* 3 */
+/*!*************************!*\
+  !*** external "morgan" ***!
+  \*************************/
+/***/ function(module, exports) {
+
+	module.exports = require("morgan");
+
+/***/ },
+/* 4 */
+/*!*************************!*\
+  !*** external "helmet" ***!
+  \*************************/
+/***/ function(module, exports) {
+
+	module.exports = require("helmet");
+
+/***/ },
+/* 5 */
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ function(module, exports) {
+
+	module.exports = require("path");
+
+/***/ },
+/* 6 */
+/*!******************************!*\
+  !*** external "compression" ***!
+  \******************************/
+/***/ function(module, exports) {
+
+	module.exports = require("compression");
+
+/***/ },
+/* 7 */
+/*!****************************************!*\
+  !*** ./src/server/middleware/index.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _getCustomersHandler = __webpack_require__(/*! ./getCustomersHandler */ 8);
+	
+	Object.defineProperty(exports, "getCustomersHandler", {
+	  enumerable: true,
+	  get: function get() {
+	    return _getCustomersHandler.getCustomersHandler;
+	  }
+	});
+	
+	var _getCustomerByIdHandler = __webpack_require__(/*! ./getCustomerByIdHandler */ 14);
+	
+	Object.defineProperty(exports, "getCustomerByIdHandler", {
+	  enumerable: true,
+	  get: function get() {
+	    return _getCustomerByIdHandler.getCustomerByIdHandler;
+	  }
+	});
+
+/***/ },
+/* 8 */
+/*!******************************************************!*\
+  !*** ./src/server/middleware/getCustomersHandler.js ***!
+  \******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getCustomersHandler = undefined;
+	
+	var _queryservice = __webpack_require__(/*! ../dataservices/queryservice */ 9);
+	
+	var getCustomersHandler = exports.getCustomersHandler = function getCustomersHandler(req, res) {
+	    try {
+	        (0, _queryservice.getDocuments)('customers', undefined, undefined, undefined, { Name: 1 }, { _id: 1, Name: 1 }).then(function (dataa) {
+	            res.json(dataa);
+	        }).catch(function (error) {
+	            res.json({ error: error });
+	        });
+	    } catch (error) {
+	        res.json({ error: error });
+	    }
+	};
+
+/***/ },
+/* 9 */
 /*!*************************************************!*\
   !*** ./src/server/dataservices/queryservice.js ***!
   \*************************************************/
@@ -110,13 +263,13 @@
 	});
 	exports.getDocumentById = exports.getDocuments = exports.defaultCollation = undefined;
 	
-	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 1);
+	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 10);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
-	var _mongodb = __webpack_require__(/*! mongodb */ 3);
+	var _mongodb = __webpack_require__(/*! mongodb */ 11);
 	
-	var _dbpromise = __webpack_require__(/*! ./dbpromise */ 4);
+	var _dbpromise = __webpack_require__(/*! ./dbpromise */ 12);
 	
 	var _dbpromise2 = _interopRequireDefault(_dbpromise);
 	
@@ -208,7 +361,16 @@
 	};
 
 /***/ },
-/* 3 */
+/* 10 */
+/*!************************************************!*\
+  !*** external "babel-runtime/core-js/promise" ***!
+  \************************************************/
+/***/ function(module, exports) {
+
+	module.exports = require("babel-runtime/core-js/promise");
+
+/***/ },
+/* 11 */
 /*!**************************!*\
   !*** external "mongodb" ***!
   \**************************/
@@ -217,7 +379,7 @@
 	module.exports = require("mongodb");
 
 /***/ },
-/* 4 */
+/* 12 */
 /*!**********************************************!*\
   !*** ./src/server/dataservices/dbpromise.js ***!
   \**********************************************/
@@ -230,13 +392,13 @@
 	});
 	exports.closeDb = undefined;
 	
-	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 1);
+	var _promise = __webpack_require__(/*! babel-runtime/core-js/promise */ 10);
 	
 	var _promise2 = _interopRequireDefault(_promise);
 	
-	var _mongodb = __webpack_require__(/*! mongodb */ 3);
+	var _mongodb = __webpack_require__(/*! mongodb */ 11);
 	
-	var _config = __webpack_require__(/*! ../config */ 5);
+	var _config = __webpack_require__(/*! ../config */ 13);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
@@ -265,7 +427,7 @@
 	exports.default = db;
 
 /***/ },
-/* 5 */
+/* 13 */
 /*!************************************!*\
   !*** ./src/server/config/index.js ***!
   \************************************/
@@ -281,6 +443,41 @@
 	};
 	
 	exports.default = config;
+
+/***/ },
+/* 14 */
+/*!*********************************************************!*\
+  !*** ./src/server/middleware/getCustomerByIdHandler.js ***!
+  \*********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getCustomerByIdHandler = undefined;
+	
+	var _queryservice = __webpack_require__(/*! ../dataservices/queryservice */ 9);
+	
+	var getCustomerByIdHandler = exports.getCustomerByIdHandler = function getCustomerByIdHandler(req, res) {
+	    try {
+	        var customerId = req.params.id;
+	        console.log('Id is: ' + customerId);
+	
+	        (0, _queryservice.getDocumentById)('customers', customerId).then(function (data) {
+	            if (data) {
+	                res.json(data);
+	            } else {
+	                res.status(404).send('Not Found'); //404 Not Found
+	            }
+	        }).catch(function (error) {
+	            res.status(500).send('Internal Server Error: ' + error); //500 Internal Server Error
+	        });
+	    } catch (error) {
+	        res.status(500).send('Internal Server Error: ' + error); //500 Internal Server Error
+	    }
+	};
 
 /***/ }
 /******/ ]);

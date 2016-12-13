@@ -9,10 +9,10 @@ class CustomerNameLink extends Component {
 
     render () {
         const customer = this.props.customer;
-        const linkto = `/customers/${customer.id}`;
+        const linkto = `/customers/${customer._id}`;
         return (
 			<Link to={linkto} className="customer-section-container">
-				{customer.name}
+				{customer.Name}
 			</Link>
         );
     }

@@ -1,7 +1,4 @@
-import {
-    ObjectID
-} from 'mongodb';
-
+import {ObjectID} from 'mongodb';
 import dbpromise from "./dbpromise";
 
 export const defaultCollation = {

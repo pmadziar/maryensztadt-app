@@ -1,15 +1,15 @@
-var express = require('express');
-var path = require('path');
+var express = require(`express`);
+var path = require(`path`);
 var app = express();
 
 // Define the port to run on
-app.set('port', 80);
-app.set('ip', '0.0.0.0');
+app.set(`port`, 80);
+app.set(`ip`, `0.0.0.0`);
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, `dist/client`)));
 
 // Listen for requests
-var server = app.listen(app.get('port'), app.get('ip'), function() {
+var server = app.listen(app.get(`port`), app.get(`ip`), function() {
   var port = server.address().port;
-  console.log('Magic happens on port ' + port);
+  console.log(`Magic happens on port ` + port);
 });

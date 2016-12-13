@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Link } from "react-router";
 
+
+import MyDataService from "../services/MyDataService";
 import CustomerNameLink from "./CustomerNameLink";
 import SearchWithSort from "../components/SearchWithSort";
 
@@ -8,15 +9,24 @@ class CustomerNamesList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            customers: this.props.customers,
+            customers: [],
             sort: null,
-            filter: null
-        }
+            filter: null,
+            isLoading: true
+        };
     }
 
-    static propTypes = {
-        customers: React.PropTypes.array.isRequired
-    }
+    componentWillMount = () => {
+        MyDataService.getCustomerNamesForCurrentUser()
+        .then((customers) => {
+            this.setState({
+                customers,
+                isLoading: false
+            });
+        }).catch((error)=>{
+            console.log(error);
+        });
+    };
 
     sortf = (sort) => {
         if(this.state.sort !== sort){
@@ -34,15 +44,15 @@ class CustomerNamesList extends Component {
     render () {
         const state = this.state;
         let customers = state.customers;
-        if(state.filter!==null && state.filter!==''){
+        if(state.filter!==null && state.filter!==``){
             customers = customers.filter((cust) => {
-                return cust.name.toLowerCase().indexOf(state.filter) > -1;
+                return cust.Name.toLowerCase().indexOf(state.filter) > -1;
             });
         }
         if(state.sort!==null){
-            const dir = state.sort === "ASC"?1:-1;
+            const dir = state.sort === `ASC`?1:-1;
             customers.sort((a,b)=>{
-                let res = a.name.localeCompare(b.name);
+                let res = a.Name.localeCompare(b.Name);
                 res *= dir;
                 return res;
             });
@@ -53,9 +63,9 @@ class CustomerNamesList extends Component {
                 <SearchWithSort sortFunc={this.sortf} filterFunc={this.filterf} />
                 <section className="customers-section-container">
                     {
-                        customers.map((customer, index) => {
+                        customers.map((customer) => {
                            return (
-                            <CustomerNameLink customer={customer} key={customer.id} />
+                            <CustomerNameLink customer={customer} key={customer._id} />
                            );
                         })
                     }

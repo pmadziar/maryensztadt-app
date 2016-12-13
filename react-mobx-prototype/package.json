@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint ./src",
-    "build": "webpack -d --config ./webpack.client-config.js && webpack --config ./webpack.server-config.js -d",
-    "watch": "webpack -d --config ./webpack.client-config.js --watch"
+    "build:client": "webpack -d --config ./webpack.client-config.js",
+    "build:server": "webpack --config ./webpack.server-config.js -d",
+    "build": "npm run build:client && npm run build:server"
   },
   "author": "",
   "license": "ISC",
@@ -30,7 +31,10 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
     "mongodb": "^2.2.12",
+    "morgan": "^1.7.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
     "react-router": "^3.0.0",

@@ -1,4 +1,5 @@
 import SampleDataService from "./SampleDataService";
+import { queryHelper } from "./queryHelper";
 
 const dataService = new SampleDataService();
 
@@ -7,7 +8,7 @@ class MyDataService {
 		this.__service = service;
 	}
 	getActivePagesForCurrentUser = () => this.__service.getActivePagesForCurrentUser();	
-	getCustomerNamesForCurrentUser = () => this.__service.getCustomerNamesForCurrentUser();	
+	getCustomerNamesForCurrentUser = () => queryHelper(`/api/mycustomers`);	
 }
 
 const instance = new MyDataService(dataService);

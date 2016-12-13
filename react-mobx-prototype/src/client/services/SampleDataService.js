@@ -6,7 +6,7 @@ class SampleDataService {
 	}
 	getActivePagesForCurrentUser = () => this.data.icons;
 	
-	getCustomerNamesForCurrentUser = () => this.data.customers;
+	getCustomerNamesForCurrentUser = () => Promise.resolve(this.data.customers);
 }
 
 export default SampleDataService;

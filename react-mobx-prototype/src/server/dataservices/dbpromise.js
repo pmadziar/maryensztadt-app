@@ -22,4 +22,5 @@ export const closeDb = () => {
     });
 };
 
+Object.freeze(db);
 export default db;
