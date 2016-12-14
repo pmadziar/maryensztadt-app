@@ -1,74 +1,56 @@
 import React, {Component} from 'react';
-import {action, observable, computed} from 'mobx';
 import {observer} from 'mobx-react'; 
 
 import CustomerNameLink from "./CustomerNameLink";
 import SearchWithSort from "../components/SearchWithSort";
-import CustomersStore from "../stores/CustomersStore";
 
+@observer class CustomerNamesList extends Component {
 
+    constructor(props){
+        super(props);
+        this.uistate = props.UiState;
+        this.CustomersStore = props.CustomersStore;
+    }
 
-@observer
-class CustomerNamesList extends Component {
-    componentWillMount = () => {
-        CustomersStore.loadMyCustomers(this.setfilteredAndSortedData);
+    static propTypes = {
+        UiState: React.PropTypes.object.isRequired,
+        CustomersStore: React.PropTypes.object.isRequired
     };
 
-    @observable sort;
-    @observable filter;
-    @observable filteredAndSortedData = [];
 
-    @action
-    sortf = (sort) => {
-        if(this.sort !== sort){
-            this.sort = sort;
-            this.setfilteredAndSortedData();
-        }
-    }
+    uistate;
+    CustomersStore;
 
-    @action
-    filterf = (filter) => {
-        const filterLowerCase = filter.toLowerCase();
-        if(this.filter !== filterLowerCase){
-            this.filter = filterLowerCase;
-            this.setfilteredAndSortedData();
-        }
-    }
-
-    @action
-    setfilteredAndSortedData = () => {
-        let customers = CustomersStore.CustomerNames.slice();
-        if(this.filter!==null && this.filter!==``){
-            customers = customers.filter((cust) => {
-                return cust.Name.toLowerCase().indexOf(this.filter) > -1;
-            });
-        }
-        if(this.sort!==null){
-            const dir = this.sort === `ASC`?1:-1;
-            customers.sort((a,b)=>{
-                let res = a.Name.localeCompare(b.Name);
-                res *= dir;
-                return res;
-            });
-        }
-        this.filteredAndSortedData.clean();
-        this.filteredAndSortedData.replace(customers);
+    componentWillMount = () => {
+        this.uistate.setIsLoadin(true);
+        this.CustomersStore.loadMyCustomers(() => this.uistate.setIsLoadin(false));
     };
 
     render () {
 
+        
+        const ShowCustomers = observer(() => {
+            let ret = <span>Wczytywanie danych...</span>;
+            if(!this.uistate.isLoading){
+                ret  = (
+                    <section className="customers-section-container">
+                        {
+                            this.uistate.filteredAndSortedData.map((customer) => {
+                                return (
+                                    <CustomerNameLink customer={customer} key={customer._id} />
+                                );
+                            })
+                        }
+                   </section>
+                   );
+            }
+            return ret;
+        });
+
         return (
             <div>
-                <SearchWithSort sortFunc={this.sortf} filterFunc={this.filterf} />
-                <section className="customers-section-container">
-                    {
-                        this.filteredAndSortedData.map((customer) => {
-                           return (
-                            <CustomerNameLink customer={customer} key={customer._id} />
-                           );
-                        })
-                    }
-                </section>
+                <SearchWithSort sortFunc={this.uistate.sortf} filterFunc={this.uistate.filterf} />
+                    <ShowCustomers />
             </div>
         );
     }

@@ -19,7 +19,6 @@ class CustomersStore {
     };
 
     loadMyCustomers = (cb) => {
-        this.CustomerNames.clear();
         MyDataService.getCustomerNamesForCurrentUser().then((data)=>{
             if(data && data.length){
                 this.setCustomerNames(data);

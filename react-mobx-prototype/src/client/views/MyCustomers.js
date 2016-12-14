@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import CustomerNamesList from "../components/CustomerNamesList";
+import CustomersStore from "../stores/CustomersStore";
+import uistate from "../stores/CustomerNamesListStore";
 
 class MyCustomers extends Component {
 
     render () {
         return (
         	<div>
-            	<CustomerNamesList />
+            	<CustomerNamesList CustomersStore={CustomersStore} UiState={uistate} />
             </div>
         );
     }
