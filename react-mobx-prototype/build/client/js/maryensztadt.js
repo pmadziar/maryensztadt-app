@@ -41911,6 +41911,10 @@
 			return (0, _queryHelper.queryHelper)("/api/mycustomers");
 		};
 	
+		this.getCustomerById = function (id) {
+			return (0, _queryHelper.queryHelper)("/api/mycustomers/" + id);
+		};
+	
 		this.__service = service;
 	};
 	
@@ -43422,7 +43426,7 @@
 	
 	var _CustomersStore2 = _interopRequireDefault(_CustomersStore);
 	
-	var _CustomerNamesListStore = __webpack_require__(/*! ../stores/CustomerNamesListStore */ 656);
+	var _CustomerNamesListStore = __webpack_require__(/*! ../stores/UI/CustomerNamesListStore */ 657);
 	
 	var _CustomerNamesListStore2 = _interopRequireDefault(_CustomerNamesListStore);
 	
@@ -43851,13 +43855,17 @@
 	
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 	
-	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _desc2, _value2, _class3, _descriptor7, _descriptor8;
+	var _desc, _value, _class2, _descriptor, _descriptor2;
 	
 	var _mobx = __webpack_require__(/*! mobx */ 620);
 	
 	var _MyDataService = __webpack_require__(/*! ../services/MyDataService */ 623);
 	
 	var _MyDataService2 = _interopRequireDefault(_MyDataService);
+	
+	var _ramda = __webpack_require__(/*! ramda */ 656);
+	
+	var _ramda2 = _interopRequireDefault(_ramda);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -43904,52 +43912,34 @@
 	    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 	}
 	
-	var CurrentCustomer = (_class = function CurrentCustomer() {
+	var CurrentCustomer = function CurrentCustomer() {
 	    (0, _classCallCheck3.default)(this, CurrentCustomer);
+	    this.PrimaryContact = [];
+	    this.SceondaryContact = [];
+	};
 	
-	    _initDefineProp(this, "_id", _descriptor, this);
-	
-	    _initDefineProp(this, "name", _descriptor2, this);
-	
-	    _initDefineProp(this, "NIP", _descriptor3, this);
-	
-	    _initDefineProp(this, "Seller", _descriptor4, this);
-	
-	    _initDefineProp(this, "PrimaryContact", _descriptor5, this);
-	
-	    _initDefineProp(this, "SceondaryContact", _descriptor6, this);
-	}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "_id", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: null
-	}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "name", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: null
-	}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "NIP", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: null
-	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "Seller", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: null
-	}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "PrimaryContact", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: function initializer() {
-	        return [];
-	    }
-	}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "SceondaryContact", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: function initializer() {
-	        return [];
-	    }
-	})), _class);
-	var CustomersStore = (_class3 = function CustomersStore() {
+	var CustomersStore = (_class2 = function CustomersStore() {
 	    var _this = this;
 	
 	    (0, _classCallCheck3.default)(this, CustomersStore);
-	    this.Current = new CurrentCustomer();
+	    this.CurrentCustomer = new CurrentCustomer();
 	
-	    _initDefineProp(this, "CustomerNames", _descriptor7, this);
+	    _initDefineProp(this, "CustomerNames", _descriptor, this);
 	
-	    _initDefineProp(this, "setCustomerNames", _descriptor8, this);
+	    _initDefineProp(this, "setCustomerNames", _descriptor2, this);
+	
+	    this.setCurrentCustomer = function (data) {
+	        _this.CurrentCustomer._id = data._id;
+	        _this.CurrentCustomer.Name = data.Name;
+	        _this.CurrentCustomer.NIP = data.NIP;
+	        _this.CurrentCustomer.Seller = data.Seller;
+	
+	        var getPrimaryContact = _ramda2.default.compose(_ramda2.default.head, _ramda2.default.filter(_ramda2.default.prop("Primary")));
+	        _this.CurrentCustomer.PrimaryContact = getPrimaryContact(data.Contact);
+	
+	        var getSecondaryContect = _ramda2.default.filter(_ramda2.default.compose(_ramda2.default.not, _ramda2.default.prop("Primary")));
+	        _this.CurrentCustomer.SceondaryContact = getSecondaryContect(data.Contact);
+	    };
 	
 	    this.loadMyCustomers = function (cb) {
 	        _MyDataService2.default.getCustomerNamesForCurrentUser().then(function (data) {
@@ -43961,12 +43951,21 @@
 	            }
 	        }).catch();
 	    };
-	}, (_descriptor7 = _applyDecoratedDescriptor(_class3.prototype, "CustomerNames", [_mobx.observable], {
+	
+	    this.loadCustomer = function (cb, id) {
+	        _MyDataService2.default.getCustomerById(id).then(function (data) {
+	            _this.setCurrentCustomer(data);
+	            if (typeof cb === "function") {
+	                cb();
+	            }
+	        });
+	    };
+	}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "CustomerNames", [_mobx.observable], {
 	    enumerable: true,
 	    initializer: function initializer() {
 	        return [];
 	    }
-	}), _descriptor8 = _applyDecoratedDescriptor(_class3.prototype, "setCustomerNames", [_mobx.action], {
+	}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "setCustomerNames", [_mobx.action], {
 	    enumerable: true,
 	    initializer: function initializer() {
 	        var _this2 = this;
@@ -43975,7 +43974,7 @@
 	            _this2.CustomerNames.replace(data);
 	        };
 	    }
-	})), _class3);
+	})), _class2);
 	
 	
 	var store = new CustomersStore();
@@ -43983,229 +43982,6 @@
 
 /***/ },
 /* 656 */
-/*!*****************************************************!*\
-  !*** ./src/client/stores/CustomerNamesListStore.js ***!
-  \*****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _defineProperty = __webpack_require__(/*! babel-runtime/core-js/object/define-property */ 504);
-	
-	var _defineProperty2 = _interopRequireDefault(_defineProperty);
-	
-	var _getOwnPropertyDescriptor = __webpack_require__(/*! babel-runtime/core-js/object/get-own-property-descriptor */ 657);
-	
-	var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
-	
-	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
-	
-	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-	
-	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
-	
-	var _createClass3 = _interopRequireDefault(_createClass2);
-	
-	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
-	
-	var _ramda = __webpack_require__(/*! ramda */ 660);
-	
-	var _ramda2 = _interopRequireDefault(_ramda);
-	
-	var _mobx = __webpack_require__(/*! mobx */ 620);
-	
-	var _CustomersStore = __webpack_require__(/*! ./CustomersStore */ 655);
-	
-	var _CustomersStore2 = _interopRequireDefault(_CustomersStore);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _initDefineProp(target, property, descriptor, context) {
-	    if (!descriptor) return;
-	    (0, _defineProperty2.default)(target, property, {
-	        enumerable: descriptor.enumerable,
-	        configurable: descriptor.configurable,
-	        writable: descriptor.writable,
-	        value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-	    });
-	}
-	
-	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-	    var desc = {};
-	    Object['ke' + 'ys'](descriptor).forEach(function (key) {
-	        desc[key] = descriptor[key];
-	    });
-	    desc.enumerable = !!desc.enumerable;
-	    desc.configurable = !!desc.configurable;
-	
-	    if ('value' in desc || desc.initializer) {
-	        desc.writable = true;
-	    }
-	
-	    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-	        return decorator(target, property, desc) || desc;
-	    }, desc);
-	
-	    if (context && desc.initializer !== void 0) {
-	        desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-	        desc.initializer = undefined;
-	    }
-	
-	    if (desc.initializer === void 0) {
-	        Object['define' + 'Property'](target, property, desc);
-	        desc = null;
-	    }
-	
-	    return desc;
-	}
-	
-	function _initializerWarningHelper(descriptor, context) {
-	    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
-	}
-	
-	var CustomerNamesListStore = (_class = function () {
-	    function CustomerNamesListStore() {
-	        (0, _classCallCheck3.default)(this, CustomerNamesListStore);
-	
-	        _initDefineProp(this, "sort", _descriptor, this);
-	
-	        _initDefineProp(this, "filter", _descriptor2, this);
-	
-	        _initDefineProp(this, "isLoading", _descriptor3, this);
-	
-	        _initDefineProp(this, "setIsLoadin", _descriptor4, this);
-	
-	        _initDefineProp(this, "sortf", _descriptor5, this);
-	
-	        _initDefineProp(this, "filterf", _descriptor6, this);
-	    }
-	
-	    (0, _createClass3.default)(CustomerNamesListStore, [{
-	        key: "filteredAndSortedData",
-	        get: function get() {
-	            var sort = this.sort;
-	            var filter = this.filter;
-	
-	            var diff = _ramda2.default.curry(function (dir, a, b) {
-	                var res = a.Name.localeCompare(b.Name, "pl");
-	                res *= dir;
-	                return res;
-	            });
-	
-	            var dir = sort !== "ASC" ? -1 : 1;
-	
-	            var sortf = _ramda2.default.sort(diff(dir));
-	
-	            var contains = _ramda2.default.curry(function (filter, cust) {
-	                if (!cust || !cust.Name) return true;
-	                return cust.Name.toLowerCase().indexOf(filter) > -1;
-	            });
-	
-	            var containsFilt = contains(filter ? filter : "");
-	
-	            var filterf = _ramda2.default.filter(containsFilt);
-	
-	            var sortAndFilterData = _ramda2.default.compose(sortf, filterf);
-	
-	            return sortAndFilterData(_CustomersStore2.default.CustomerNames.slice());
-	        }
-	    }]);
-	    return CustomerNamesListStore;
-	}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "sort", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: null
-	}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "filter", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: null
-	}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "isLoading", [_mobx.observable], {
-	    enumerable: true,
-	    initializer: function initializer() {
-	        return false;
-	    }
-	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "setIsLoadin", [_mobx.action], {
-	    enumerable: true,
-	    initializer: function initializer() {
-	        var _this = this;
-	
-	        return function (isloading) {
-	            return _this.isLoading = isloading;
-	        };
-	    }
-	}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "sortf", [_mobx.action], {
-	    enumerable: true,
-	    initializer: function initializer() {
-	        var _this2 = this;
-	
-	        return function (sort) {
-	            if (_this2.sort !== sort) {
-	                _this2.sort = sort;
-	            }
-	        };
-	    }
-	}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "filterf", [_mobx.action], {
-	    enumerable: true,
-	    initializer: function initializer() {
-	        var _this3 = this;
-	
-	        return function (filter) {
-	            var filterLowerCase = filter.toLowerCase();
-	            if (_this3.filter !== filterLowerCase) {
-	                _this3.filter = filterLowerCase;
-	            }
-	        };
-	    }
-	}), _applyDecoratedDescriptor(_class.prototype, "filteredAndSortedData", [_mobx.computed], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "filteredAndSortedData"), _class.prototype)), _class);
-	
-	
-	var uistate = new CustomerNamesListStore();
-	
-	exports.default = uistate;
-
-/***/ },
-/* 657 */
-/*!***********************************************************************!*\
-  !*** ./~/babel-runtime/core-js/object/get-own-property-descriptor.js ***!
-  \***********************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/get-own-property-descriptor */ 658), __esModule: true };
-
-/***/ },
-/* 658 */
-/*!********************************************************************!*\
-  !*** ./~/core-js/library/fn/object/get-own-property-descriptor.js ***!
-  \********************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(/*! ../../modules/es6.object.get-own-property-descriptor */ 659);
-	var $Object = __webpack_require__(/*! ../../modules/_core */ 489).Object;
-	module.exports = function getOwnPropertyDescriptor(it, key){
-	  return $Object.getOwnPropertyDescriptor(it, key);
-	};
-
-/***/ },
-/* 659 */
-/*!*****************************************************************************!*\
-  !*** ./~/core-js/library/modules/es6.object.get-own-property-descriptor.js ***!
-  \*****************************************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-	var toIObject                 = __webpack_require__(/*! ./_to-iobject */ 523)
-	  , $getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 550).f;
-	
-	__webpack_require__(/*! ./_object-sap */ 487)('getOwnPropertyDescriptor', function(){
-	  return function getOwnPropertyDescriptor(it, key){
-	    return $getOwnPropertyDescriptor(toIObject(it), key);
-	  };
-	});
-
-/***/ },
-/* 660 */
 /*!*******************************!*\
   !*** ./~/ramda/dist/ramda.js ***!
   \*******************************/
@@ -53045,10 +52821,10 @@
 
 
 /***/ },
-/* 661 */
-/*!**************************************!*\
-  !*** ./src/client/views/Customer.js ***!
-  \**************************************/
+/* 657 */
+/*!********************************************************!*\
+  !*** ./src/client/stores/UI/CustomerNamesListStore.js ***!
+  \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -53056,6 +52832,233 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _defineProperty = __webpack_require__(/*! babel-runtime/core-js/object/define-property */ 504);
+	
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+	
+	var _getOwnPropertyDescriptor = __webpack_require__(/*! babel-runtime/core-js/object/get-own-property-descriptor */ 658);
+	
+	var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
+	
+	var _ramda = __webpack_require__(/*! ramda */ 656);
+	
+	var _ramda2 = _interopRequireDefault(_ramda);
+	
+	var _mobx = __webpack_require__(/*! mobx */ 620);
+	
+	var _CustomersStore = __webpack_require__(/*! ../CustomersStore */ 655);
+	
+	var _CustomersStore2 = _interopRequireDefault(_CustomersStore);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _initDefineProp(target, property, descriptor, context) {
+	    if (!descriptor) return;
+	    (0, _defineProperty2.default)(target, property, {
+	        enumerable: descriptor.enumerable,
+	        configurable: descriptor.configurable,
+	        writable: descriptor.writable,
+	        value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+	    });
+	}
+	
+	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+	    var desc = {};
+	    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+	        desc[key] = descriptor[key];
+	    });
+	    desc.enumerable = !!desc.enumerable;
+	    desc.configurable = !!desc.configurable;
+	
+	    if ('value' in desc || desc.initializer) {
+	        desc.writable = true;
+	    }
+	
+	    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+	        return decorator(target, property, desc) || desc;
+	    }, desc);
+	
+	    if (context && desc.initializer !== void 0) {
+	        desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+	        desc.initializer = undefined;
+	    }
+	
+	    if (desc.initializer === void 0) {
+	        Object['define' + 'Property'](target, property, desc);
+	        desc = null;
+	    }
+	
+	    return desc;
+	}
+	
+	function _initializerWarningHelper(descriptor, context) {
+	    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+	}
+	
+	var CustomerNamesListStore = (_class = function () {
+	    function CustomerNamesListStore() {
+	        (0, _classCallCheck3.default)(this, CustomerNamesListStore);
+	
+	        _initDefineProp(this, "sort", _descriptor, this);
+	
+	        _initDefineProp(this, "filter", _descriptor2, this);
+	
+	        _initDefineProp(this, "isLoading", _descriptor3, this);
+	
+	        _initDefineProp(this, "setIsLoadin", _descriptor4, this);
+	
+	        _initDefineProp(this, "sortf", _descriptor5, this);
+	
+	        _initDefineProp(this, "filterf", _descriptor6, this);
+	    }
+	
+	    (0, _createClass3.default)(CustomerNamesListStore, [{
+	        key: "filteredAndSortedData",
+	        get: function get() {
+	            var sort = this.sort;
+	            var filter = this.filter;
+	
+	            var diff = _ramda2.default.curry(function (dir, a, b) {
+	                var res = a.Name.localeCompare(b.Name, "pl");
+	                res *= dir;
+	                return res;
+	            });
+	
+	            var dir = sort !== "ASC" ? -1 : 1;
+	
+	            var sortf = _ramda2.default.sort(diff(dir));
+	
+	            var contains = _ramda2.default.curry(function (filter, cust) {
+	                if (!cust || !cust.Name) return true;
+	                return cust.Name.toLowerCase().indexOf(filter) > -1;
+	            });
+	
+	            var containsFilt = contains(filter ? filter : "");
+	
+	            var filterf = _ramda2.default.filter(containsFilt);
+	
+	            var sortAndFilterData = _ramda2.default.compose(sortf, filterf);
+	
+	            return sortAndFilterData(_CustomersStore2.default.CustomerNames.slice());
+	        }
+	    }]);
+	    return CustomerNamesListStore;
+	}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "sort", [_mobx.observable], {
+	    enumerable: true,
+	    initializer: null
+	}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "filter", [_mobx.observable], {
+	    enumerable: true,
+	    initializer: null
+	}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "isLoading", [_mobx.observable], {
+	    enumerable: true,
+	    initializer: function initializer() {
+	        return false;
+	    }
+	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "setIsLoadin", [_mobx.action], {
+	    enumerable: true,
+	    initializer: function initializer() {
+	        var _this = this;
+	
+	        return function (isloading) {
+	            return _this.isLoading = isloading;
+	        };
+	    }
+	}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "sortf", [_mobx.action], {
+	    enumerable: true,
+	    initializer: function initializer() {
+	        var _this2 = this;
+	
+	        return function (sort) {
+	            if (_this2.sort !== sort) {
+	                _this2.sort = sort;
+	            }
+	        };
+	    }
+	}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "filterf", [_mobx.action], {
+	    enumerable: true,
+	    initializer: function initializer() {
+	        var _this3 = this;
+	
+	        return function (filter) {
+	            var filterLowerCase = filter.toLowerCase();
+	            if (_this3.filter !== filterLowerCase) {
+	                _this3.filter = filterLowerCase;
+	            }
+	        };
+	    }
+	}), _applyDecoratedDescriptor(_class.prototype, "filteredAndSortedData", [_mobx.computed], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "filteredAndSortedData"), _class.prototype)), _class);
+	
+	
+	var uistate = new CustomerNamesListStore();
+	
+	exports.default = uistate;
+
+/***/ },
+/* 658 */
+/*!***********************************************************************!*\
+  !*** ./~/babel-runtime/core-js/object/get-own-property-descriptor.js ***!
+  \***********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/get-own-property-descriptor */ 659), __esModule: true };
+
+/***/ },
+/* 659 */
+/*!********************************************************************!*\
+  !*** ./~/core-js/library/fn/object/get-own-property-descriptor.js ***!
+  \********************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ../../modules/es6.object.get-own-property-descriptor */ 660);
+	var $Object = __webpack_require__(/*! ../../modules/_core */ 489).Object;
+	module.exports = function getOwnPropertyDescriptor(it, key){
+	  return $Object.getOwnPropertyDescriptor(it, key);
+	};
+
+/***/ },
+/* 660 */
+/*!*****************************************************************************!*\
+  !*** ./~/core-js/library/modules/es6.object.get-own-property-descriptor.js ***!
+  \*****************************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+	var toIObject                 = __webpack_require__(/*! ./_to-iobject */ 523)
+	  , $getOwnPropertyDescriptor = __webpack_require__(/*! ./_object-gopd */ 550).f;
+	
+	__webpack_require__(/*! ./_object-sap */ 487)('getOwnPropertyDescriptor', function(){
+	  return function getOwnPropertyDescriptor(it, key){
+	    return $getOwnPropertyDescriptor(toIObject(it), key);
+	  };
+	});
+
+/***/ },
+/* 661 */
+/*!**************************************!*\
+  !*** ./src/client/views/Customer.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends2 = __webpack_require__(/*! babel-runtime/helpers/extends */ 662);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
 	
 	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
 	
@@ -53081,78 +53084,287 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _IconTab = __webpack_require__(/*! ../components/IconTab */ 662);
+	var _CustomerDetails = __webpack_require__(/*! ../components/CustomerDetails */ 667);
+	
+	var _CustomerDetails2 = _interopRequireDefault(_CustomerDetails);
+	
+	var _CustomersStore = __webpack_require__(/*! ../stores/CustomersStore */ 655);
+	
+	var _CustomersStore2 = _interopRequireDefault(_CustomersStore);
+	
+	var _Customer = __webpack_require__(/*! ../stores/UI/Customer */ 678);
+	
+	var _Customer2 = _interopRequireDefault(_Customer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Customer = function (_Component) {
+	    (0, _inherits3.default)(Customer, _Component);
+	
+	    function Customer() {
+	        (0, _classCallCheck3.default)(this, Customer);
+	        return (0, _possibleConstructorReturn3.default)(this, (Customer.__proto__ || (0, _getPrototypeOf2.default)(Customer)).apply(this, arguments));
+	    }
+	
+	    (0, _createClass3.default)(Customer, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(_CustomerDetails2.default, (0, _extends3.default)({}, this.props, { CustomersStore: _CustomersStore2.default, UiState: _Customer2.default }));
+	        }
+	    }]);
+	    return Customer;
+	}(_react.Component);
+	
+	exports.default = Customer;
+
+/***/ },
+/* 662 */
+/*!********************************************!*\
+  !*** ./~/babel-runtime/helpers/extends.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	
+	var _assign = __webpack_require__(/*! ../core-js/object/assign */ 663);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _assign2.default || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
+	
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }
+	
+	  return target;
+	};
+
+/***/ },
+/* 663 */
+/*!**************************************************!*\
+  !*** ./~/babel-runtime/core-js/object/assign.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/assign */ 664), __esModule: true };
+
+/***/ },
+/* 664 */
+/*!***********************************************!*\
+  !*** ./~/core-js/library/fn/object/assign.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(/*! ../../modules/es6.object.assign */ 665);
+	module.exports = __webpack_require__(/*! ../../modules/_core */ 489).Object.assign;
+
+/***/ },
+/* 665 */
+/*!********************************************************!*\
+  !*** ./~/core-js/library/modules/es6.object.assign.js ***!
+  \********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $export = __webpack_require__(/*! ./_export */ 488);
+	
+	$export($export.S + $export.F, 'Object', {assign: __webpack_require__(/*! ./_object-assign */ 666)});
+
+/***/ },
+/* 666 */
+/*!*****************************************************!*\
+  !*** ./~/core-js/library/modules/_object-assign.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var getKeys  = __webpack_require__(/*! ./_object-keys */ 521)
+	  , gOPS     = __webpack_require__(/*! ./_object-gops */ 545)
+	  , pIE      = __webpack_require__(/*! ./_object-pie */ 546)
+	  , toObject = __webpack_require__(/*! ./_to-object */ 479)
+	  , IObject  = __webpack_require__(/*! ./_iobject */ 524)
+	  , $assign  = Object.assign;
+	
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = !$assign || __webpack_require__(/*! ./_fails */ 498)(function(){
+	  var A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , aLen  = arguments.length
+	    , index = 1
+	    , getSymbols = gOPS.f
+	    , isEnum     = pIE.f;
+	  while(aLen > index){
+	    var S      = IObject(arguments[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+	  } return T;
+	} : $assign;
+
+/***/ },
+/* 667 */
+/*!**************************************************!*\
+  !*** ./src/client/components/CustomerDetails.js ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends2 = __webpack_require__(/*! babel-runtime/helpers/extends */ 662);
+	
+	var _extends3 = _interopRequireDefault(_extends2);
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _class, _class2, _temp;
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _mobxReact = __webpack_require__(/*! mobx-react */ 621);
+	
+	var _IconTab = __webpack_require__(/*! ./IconTab */ 668);
 	
 	var IconTab = _interopRequireWildcard(_IconTab);
+	
+	var _CustomerTabs = __webpack_require__(/*! ./CustomerTabs */ 676);
+	
+	var CustomerTabs = _interopRequireWildcard(_CustomerTabs);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var MyCustomers = function (_Component) {
-	    (0, _inherits3.default)(MyCustomers, _Component);
+	var CustomerDetails = (0, _mobxReact.observer)(_class = (_temp = _class2 = function (_Component) {
+	    (0, _inherits3.default)(CustomerDetails, _Component);
 	
-	    function MyCustomers() {
-	        (0, _classCallCheck3.default)(this, MyCustomers);
-	        return (0, _possibleConstructorReturn3.default)(this, (MyCustomers.__proto__ || (0, _getPrototypeOf2.default)(MyCustomers)).apply(this, arguments));
+	    function CustomerDetails(props) {
+	        (0, _classCallCheck3.default)(this, CustomerDetails);
+	
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (CustomerDetails.__proto__ || (0, _getPrototypeOf2.default)(CustomerDetails)).call(this, props));
+	
+	        _this.componentWillMount = function () {
+	            _this.uistate.setIsLoadin(true);
+	            _this.CustomersStore.loadCustomer(function () {
+	                return _this.uistate.setIsLoadin(false);
+	            }, _this.props.params.id);
+	        };
+	
+	        _this.uistate = props.UiState;
+	        _this.CustomersStore = props.CustomersStore;
+	        return _this;
 	    }
 	
-	    (0, _createClass3.default)(MyCustomers, [{
-	        key: "render",
+	    (0, _createClass3.default)(CustomerDetails, [{
+	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(
-	                IconTab.Tabs,
-	                null,
-	                _react2.default.createElement(
-	                    IconTab.Tab,
-	                    { id: "tab01", faClassName: "fa-building" },
-	                    _react2.default.createElement(
-	                        "h1",
+	            var _this2 = this;
+	
+	            var RenderTabs = (0, _mobxReact.observer)(function () {
+	                var ret = _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    'Wczytywanie danych ....'
+	                );
+	                if (!_this2.uistate.isLoading) {
+	                    ret = _react2.default.createElement(
+	                        IconTab.Tabs,
 	                        null,
-	                        "What is Lorem Ipsum?"
-	                    ),
-	                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-	                ),
-	                _react2.default.createElement(
-	                    IconTab.Tab,
-	                    { id: "tab02", faClassName: "fa-sticky-note" },
-	                    _react2.default.createElement(
-	                        "h1",
-	                        null,
-	                        "Where does it come from?"
-	                    ),
-	                    "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32."
-	                ),
-	                _react2.default.createElement(
-	                    IconTab.Tab,
-	                    { id: "tab03", faClassName: "fa-phone" },
-	                    _react2.default.createElement(
-	                        "h1",
-	                        null,
-	                        "Why do we use it?"
-	                    ),
-	                    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
-	                ),
-	                _react2.default.createElement(
-	                    IconTab.Tab,
-	                    { id: "tab04", faClassName: "fa-shopping-cart" },
-	                    _react2.default.createElement(
-	                        "h1",
-	                        null,
-	                        "Where can I get some?"
-	                    ),
-	                    "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
-	                )
-	            );
+	                        _react2.default.createElement(
+	                            IconTab.Tab,
+	                            { id: 'tab01', faClassName: 'fa-building' },
+	                            _react2.default.createElement(CustomerTabs.CustomerDetails, (0, _extends3.default)({}, _this2.props, { CurrentCustomer: _this2.CustomersStore.CurrentCustomer }))
+	                        ),
+	                        _react2.default.createElement(
+	                            IconTab.Tab,
+	                            { id: 'tab02', faClassName: 'fa-sticky-note' },
+	                            _react2.default.createElement(
+	                                'h1',
+	                                null,
+	                                'Where can I get some 11111111111111?'
+	                            ),
+	                            'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'
+	                        ),
+	                        _react2.default.createElement(
+	                            IconTab.Tab,
+	                            { id: 'tab03', faClassName: 'fa-phone' },
+	                            _react2.default.createElement(
+	                                'h1',
+	                                null,
+	                                'Why do we use it?'
+	                            ),
+	                            'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).'
+	                        ),
+	                        _react2.default.createElement(
+	                            IconTab.Tab,
+	                            { id: 'tab04', faClassName: 'fa-shopping-cart' },
+	                            _react2.default.createElement(
+	                                'h1',
+	                                null,
+	                                'Where can I get some 2222222222222?'
+	                            ),
+	                            'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.'
+	                        )
+	                    );
+	                }
+	                return ret;
+	            });
+	
+	            return _react2.default.createElement(RenderTabs, null);
 	        }
 	    }]);
-	    return MyCustomers;
-	}(_react.Component);
+	    return CustomerDetails;
+	}(_react.Component), _class2.propTypes = {
+	    CustomersStore: _react2.default.PropTypes.object.isRequired,
+	    UiState: _react2.default.PropTypes.object.isRequired
+	}, _temp)) || _class;
 	
-	exports.default = MyCustomers;
+	exports.default = CustomerDetails;
 
 /***/ },
-/* 662 */
+/* 668 */
 /*!************************************************!*\
   !*** ./src/client/components/IconTab/index.js ***!
   \************************************************/
@@ -53164,7 +53376,7 @@
 	  value: true
 	});
 	
-	var _Tabs = __webpack_require__(/*! ./Tabs */ 663);
+	var _Tabs = __webpack_require__(/*! ./Tabs */ 669);
 	
 	Object.defineProperty(exports, "Tabs", {
 	  enumerable: true,
@@ -53173,7 +53385,7 @@
 	  }
 	});
 	
-	var _Tab = __webpack_require__(/*! ./Tab */ 669);
+	var _Tab = __webpack_require__(/*! ./Tab */ 675);
 	
 	Object.defineProperty(exports, "Tab", {
 	  enumerable: true,
@@ -53183,7 +53395,7 @@
 	});
 
 /***/ },
-/* 663 */
+/* 669 */
 /*!***********************************************!*\
   !*** ./src/client/components/IconTab/Tabs.js ***!
   \***********************************************/
@@ -53220,11 +53432,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ramda = __webpack_require__(/*! ramda */ 660);
+	var _ramda = __webpack_require__(/*! ramda */ 656);
 	
 	var _ramda2 = _interopRequireDefault(_ramda);
 	
-	var _uuid = __webpack_require__(/*! uuid */ 664);
+	var _uuid = __webpack_require__(/*! uuid */ 670);
 	
 	var _uuid2 = _interopRequireDefault(_uuid);
 	
@@ -53282,14 +53494,14 @@
 	}(_react.Component);
 
 /***/ },
-/* 664 */
+/* 670 */
 /*!*************************!*\
   !*** ./~/uuid/index.js ***!
   \*************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var v1 = __webpack_require__(/*! ./v1 */ 665);
-	var v4 = __webpack_require__(/*! ./v4 */ 668);
+	var v1 = __webpack_require__(/*! ./v1 */ 671);
+	var v4 = __webpack_require__(/*! ./v4 */ 674);
 	
 	var uuid = v4;
 	uuid.v1 = v1;
@@ -53299,7 +53511,7 @@
 
 
 /***/ },
-/* 665 */
+/* 671 */
 /*!**********************!*\
   !*** ./~/uuid/v1.js ***!
   \**********************/
@@ -53308,8 +53520,8 @@
 	// Unique ID creation requires a high quality random # generator.  We feature
 	// detect to determine the best RNG source, normalizing to a function that
 	// returns 128-bits of randomness, since that's what's usually required
-	var rng = __webpack_require__(/*! ./lib/rng */ 666);
-	var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 667);
+	var rng = __webpack_require__(/*! ./lib/rng */ 672);
+	var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 673);
 	
 	// **`v1()` - Generate time-based UUID**
 	//
@@ -53411,7 +53623,7 @@
 
 
 /***/ },
-/* 666 */
+/* 672 */
 /*!***********************************!*\
   !*** ./~/uuid/lib/rng-browser.js ***!
   \***********************************/
@@ -53454,7 +53666,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 667 */
+/* 673 */
 /*!***********************************!*\
   !*** ./~/uuid/lib/bytesToUuid.js ***!
   \***********************************/
@@ -53486,14 +53698,14 @@
 
 
 /***/ },
-/* 668 */
+/* 674 */
 /*!**********************!*\
   !*** ./~/uuid/v4.js ***!
   \**********************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var rng = __webpack_require__(/*! ./lib/rng */ 666);
-	var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 667);
+	var rng = __webpack_require__(/*! ./lib/rng */ 672);
+	var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 673);
 	
 	function v4(options, buf, offset) {
 	  var i = buf && offset || 0;
@@ -53524,7 +53736,7 @@
 
 
 /***/ },
-/* 669 */
+/* 675 */
 /*!**********************************************!*\
   !*** ./src/client/components/IconTab/Tab.js ***!
   \**********************************************/
@@ -53588,6 +53800,365 @@
 	    id: _react2.default.PropTypes.string.isRequired,
 	    faClassName: _react2.default.PropTypes.string.isRequired
 	}, _temp);
+
+/***/ },
+/* 676 */
+/*!*****************************************************!*\
+  !*** ./src/client/components/CustomerTabs/index.js ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _CustomerDetails = __webpack_require__(/*! ./CustomerDetails */ 677);
+	
+	Object.defineProperty(exports, 'CustomerDetails', {
+	  enumerable: true,
+	  get: function get() {
+	    return _CustomerDetails.CustomerDetails;
+	  }
+	});
+
+/***/ },
+/* 677 */
+/*!***************************************************************!*\
+  !*** ./src/client/components/CustomerTabs/CustomerDetails.js ***!
+  \***************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.CustomerDetails = undefined;
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _class, _temp2;
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var CustomerDetails = exports.CustomerDetails = (_temp2 = _class = function (_Component) {
+	    (0, _inherits3.default)(CustomerDetails, _Component);
+	
+	    function CustomerDetails() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
+	        (0, _classCallCheck3.default)(this, CustomerDetails);
+	
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = CustomerDetails.__proto__ || (0, _getPrototypeOf2.default)(CustomerDetails)).call.apply(_ref, [this].concat(args))), _this), _this.showContact = function (contact) {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "Id:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact._id
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "Address1:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact.Address1
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "Address2:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact.Address2
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "City:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact.City
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "Email:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact.Email
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "PhoneNo:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact.PhoneNo
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "State:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact.State
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    null,
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        "Primary:"
+	                    ),
+	                    _react2.default.createElement(
+	                        "span",
+	                        null,
+	                        contact.Primary.toString()
+	                    )
+	                )
+	            );
+	        }, _this.render = function () {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "panel" },
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "panel_title" },
+	                    "Nazwa i adress"
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "panel_body" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        null,
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            "Name:"
+	                        ),
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            _this.props.CurrentCustomer.Name
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        null,
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            "NIP:"
+	                        ),
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            _this.props.CurrentCustomer.NIP
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        "div",
+	                        null,
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            "Seller:"
+	                        ),
+	                        _react2.default.createElement(
+	                            "span",
+	                            null,
+	                            _this.props.CurrentCustomer.Seller
+	                        )
+	                    ),
+	                    _this.showContact(_this.props.CurrentCustomer.PrimaryContact)
+	                ),
+	                _react2.default.createElement("div", { className: "panel_footer" })
+	            );
+	        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+	    }
+	
+	    return CustomerDetails;
+	}(_react.Component), _class.propTypes = {
+	    CurrentCustomer: _react2.default.PropTypes.object.isRequired,
+	    UiState: _react2.default.PropTypes.object.isRequired
+	}, _temp2);
+
+/***/ },
+/* 678 */
+/*!******************************************!*\
+  !*** ./src/client/stores/UI/Customer.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _defineProperty = __webpack_require__(/*! babel-runtime/core-js/object/define-property */ 504);
+	
+	var _defineProperty2 = _interopRequireDefault(_defineProperty);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _desc, _value, _class, _descriptor, _descriptor2;
+	
+	var _ramda = __webpack_require__(/*! ramda */ 656);
+	
+	var _ramda2 = _interopRequireDefault(_ramda);
+	
+	var _mobx = __webpack_require__(/*! mobx */ 620);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _initDefineProp(target, property, descriptor, context) {
+	    if (!descriptor) return;
+	    (0, _defineProperty2.default)(target, property, {
+	        enumerable: descriptor.enumerable,
+	        configurable: descriptor.configurable,
+	        writable: descriptor.writable,
+	        value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+	    });
+	}
+	
+	function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+	    var desc = {};
+	    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+	        desc[key] = descriptor[key];
+	    });
+	    desc.enumerable = !!desc.enumerable;
+	    desc.configurable = !!desc.configurable;
+	
+	    if ('value' in desc || desc.initializer) {
+	        desc.writable = true;
+	    }
+	
+	    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+	        return decorator(target, property, desc) || desc;
+	    }, desc);
+	
+	    if (context && desc.initializer !== void 0) {
+	        desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+	        desc.initializer = undefined;
+	    }
+	
+	    if (desc.initializer === void 0) {
+	        Object['define' + 'Property'](target, property, desc);
+	        desc = null;
+	    }
+	
+	    return desc;
+	}
+	
+	function _initializerWarningHelper(descriptor, context) {
+	    throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
+	}
+	
+	var Customer = (_class = function Customer() {
+	    (0, _classCallCheck3.default)(this, Customer);
+	
+	    _initDefineProp(this, "isLoading", _descriptor, this);
+	
+	    _initDefineProp(this, "setIsLoadin", _descriptor2, this);
+	}, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "isLoading", [_mobx.observable], {
+	    enumerable: true,
+	    initializer: function initializer() {
+	        return false;
+	    }
+	}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "setIsLoadin", [_mobx.action], {
+	    enumerable: true,
+	    initializer: function initializer() {
+	        var _this = this;
+	
+	        return function (isloading) {
+	            return _this.isLoading = isloading;
+	        };
+	    }
+	})), _class);
+	
+	
+	var uistate = new Customer();
+	
+	exports.default = uistate;
 
 /***/ }
 /******/ ]);

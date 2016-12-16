@@ -9,6 +9,7 @@ class MyDataService {
 	}
 	getActivePagesForCurrentUser = () => this.__service.getActivePagesForCurrentUser();	
 	getCustomerNamesForCurrentUser = () => queryHelper(`/api/mycustomers`);	
+	getCustomerById = (id) => queryHelper(`/api/mycustomers/${id}`);	
 }
 
 const instance = new MyDataService(dataService);
