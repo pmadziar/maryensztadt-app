@@ -30835,7 +30835,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+			value: true
 	});
 	
 	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
@@ -30876,32 +30876,37 @@
 	
 	var _MyCustomers2 = _interopRequireDefault(_MyCustomers);
 	
+	var _Customer = __webpack_require__(/*! ./Customer */ 661);
+	
+	var _Customer2 = _interopRequireDefault(_Customer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var AppRouter = function (_Component) {
-	  (0, _inherits3.default)(AppRouter, _Component);
+			(0, _inherits3.default)(AppRouter, _Component);
 	
-	  function AppRouter() {
-	    (0, _classCallCheck3.default)(this, AppRouter);
-	    return (0, _possibleConstructorReturn3.default)(this, (AppRouter.__proto__ || (0, _getPrototypeOf2.default)(AppRouter)).apply(this, arguments));
-	  }
+			function AppRouter() {
+					(0, _classCallCheck3.default)(this, AppRouter);
+					return (0, _possibleConstructorReturn3.default)(this, (AppRouter.__proto__ || (0, _getPrototypeOf2.default)(AppRouter)).apply(this, arguments));
+			}
 	
-	  (0, _createClass3.default)(AppRouter, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactRouter.Router,
-	        { history: _reactRouter.hashHistory },
-	        _react2.default.createElement(
-	          _reactRouter.Route,
-	          { path: '/', component: _App2.default },
-	          _react2.default.createElement(_reactRouter.IndexRoute, { component: _Dashboard2.default }),
-	          _react2.default.createElement(_reactRouter.Route, { path: '/mycustomers', component: _MyCustomers2.default })
-	        )
-	      );
-	    }
-	  }]);
-	  return AppRouter;
+			(0, _createClass3.default)(AppRouter, [{
+					key: 'render',
+					value: function render() {
+							return _react2.default.createElement(
+									_reactRouter.Router,
+									{ history: _reactRouter.hashHistory },
+									_react2.default.createElement(
+											_reactRouter.Route,
+											{ path: '/', component: _App2.default },
+											_react2.default.createElement(_reactRouter.IndexRoute, { component: _Dashboard2.default }),
+											_react2.default.createElement(_reactRouter.Route, { path: '/mycustomers', component: _MyCustomers2.default }),
+											_react2.default.createElement(_reactRouter.Route, { path: '/customers/:id', component: _Customer2.default })
+									)
+							);
+					}
+			}]);
+			return AppRouter;
 	}(_react.Component);
 	
 	exports.default = AppRouter;
@@ -53038,6 +53043,551 @@
 	
 	}.call(this));
 
+
+/***/ },
+/* 661 */
+/*!**************************************!*\
+  !*** ./src/client/views/Customer.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _IconTab = __webpack_require__(/*! ../components/IconTab */ 662);
+	
+	var IconTab = _interopRequireWildcard(_IconTab);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MyCustomers = function (_Component) {
+	    (0, _inherits3.default)(MyCustomers, _Component);
+	
+	    function MyCustomers() {
+	        (0, _classCallCheck3.default)(this, MyCustomers);
+	        return (0, _possibleConstructorReturn3.default)(this, (MyCustomers.__proto__ || (0, _getPrototypeOf2.default)(MyCustomers)).apply(this, arguments));
+	    }
+	
+	    (0, _createClass3.default)(MyCustomers, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                IconTab.Tabs,
+	                null,
+	                _react2.default.createElement(
+	                    IconTab.Tab,
+	                    { id: "tab01", faClassName: "fa-building" },
+	                    _react2.default.createElement(
+	                        "h1",
+	                        null,
+	                        "What is Lorem Ipsum?"
+	                    ),
+	                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+	                ),
+	                _react2.default.createElement(
+	                    IconTab.Tab,
+	                    { id: "tab02", faClassName: "fa-sticky-note" },
+	                    _react2.default.createElement(
+	                        "h1",
+	                        null,
+	                        "Where does it come from?"
+	                    ),
+	                    "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32."
+	                ),
+	                _react2.default.createElement(
+	                    IconTab.Tab,
+	                    { id: "tab03", faClassName: "fa-phone" },
+	                    _react2.default.createElement(
+	                        "h1",
+	                        null,
+	                        "Why do we use it?"
+	                    ),
+	                    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."
+	                ),
+	                _react2.default.createElement(
+	                    IconTab.Tab,
+	                    { id: "tab04", faClassName: "fa-shopping-cart" },
+	                    _react2.default.createElement(
+	                        "h1",
+	                        null,
+	                        "Where can I get some?"
+	                    ),
+	                    "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."
+	                )
+	            );
+	        }
+	    }]);
+	    return MyCustomers;
+	}(_react.Component);
+	
+	exports.default = MyCustomers;
+
+/***/ },
+/* 662 */
+/*!************************************************!*\
+  !*** ./src/client/components/IconTab/index.js ***!
+  \************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Tabs = __webpack_require__(/*! ./Tabs */ 663);
+	
+	Object.defineProperty(exports, "Tabs", {
+	  enumerable: true,
+	  get: function get() {
+	    return _Tabs.Tabs;
+	  }
+	});
+	
+	var _Tab = __webpack_require__(/*! ./Tab */ 669);
+	
+	Object.defineProperty(exports, "Tab", {
+	  enumerable: true,
+	  get: function get() {
+	    return _Tab.Tab;
+	  }
+	});
+
+/***/ },
+/* 663 */
+/*!***********************************************!*\
+  !*** ./src/client/components/IconTab/Tabs.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Tabs = undefined;
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ramda = __webpack_require__(/*! ramda */ 660);
+	
+	var _ramda2 = _interopRequireDefault(_ramda);
+	
+	var _uuid = __webpack_require__(/*! uuid */ 664);
+	
+	var _uuid2 = _interopRequireDefault(_uuid);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Tabs = exports.Tabs = function (_Component) {
+	    (0, _inherits3.default)(Tabs, _Component);
+	
+	    function Tabs() {
+	        (0, _classCallCheck3.default)(this, Tabs);
+	        return (0, _possibleConstructorReturn3.default)(this, (Tabs.__proto__ || (0, _getPrototypeOf2.default)(Tabs)).apply(this, arguments));
+	    }
+	
+	    (0, _createClass3.default)(Tabs, [{
+	        key: 'getRadiosAndLabels',
+	        value: function getRadiosAndLabels() {
+	            var ret = [];
+	            var checked = true;
+	            var idPrefix = _uuid2.default.v4().toString();
+	            var rbname = 'tabRadioButton_' + idPrefix;
+	            _ramda2.default.forEach(function (child) {
+	                console.log('Child props => id' + child.props.id + ', faClassName: ' + child.props.faClassName);
+	                var rbid = 'rb_' + idPrefix + '_' + child.props.id;
+	                ret.push(_react2.default.createElement('input', { key: rbid, id: rbid, type: 'radio', name: rbname, className: 'tab', defaultChecked: checked }));
+	                checked = false;
+	            }, this.props.children);
+	            _ramda2.default.forEach(function (child) {
+	                var lblid = 'lbl_' + idPrefix + '_' + child.props.id;
+	                var rbid = 'rb_' + idPrefix + '_' + child.props.id;
+	                var faClass = 'fa ' + child.props.faClassName + ' fa-2x';
+	                ret.push(_react2.default.createElement(
+	                    'label',
+	                    { id: lblid, key: lblid, htmlFor: rbid },
+	                    _react2.default.createElement('i', { className: faClass, 'aria-hidden': 'true' })
+	                ));
+	            }, this.props.children);
+	            return ret;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'tab-and-content-container' },
+	                this.getRadiosAndLabels(),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'tabs-conent-container' },
+	                    this.props.children
+	                )
+	            );
+	        }
+	    }]);
+	    return Tabs;
+	}(_react.Component);
+
+/***/ },
+/* 664 */
+/*!*************************!*\
+  !*** ./~/uuid/index.js ***!
+  \*************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var v1 = __webpack_require__(/*! ./v1 */ 665);
+	var v4 = __webpack_require__(/*! ./v4 */ 668);
+	
+	var uuid = v4;
+	uuid.v1 = v1;
+	uuid.v4 = v4;
+	
+	module.exports = uuid;
+
+
+/***/ },
+/* 665 */
+/*!**********************!*\
+  !*** ./~/uuid/v1.js ***!
+  \**********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// Unique ID creation requires a high quality random # generator.  We feature
+	// detect to determine the best RNG source, normalizing to a function that
+	// returns 128-bits of randomness, since that's what's usually required
+	var rng = __webpack_require__(/*! ./lib/rng */ 666);
+	var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 667);
+	
+	// **`v1()` - Generate time-based UUID**
+	//
+	// Inspired by https://github.com/LiosK/UUID.js
+	// and http://docs.python.org/library/uuid.html
+	
+	// random #'s we need to init node and clockseq
+	var _seedBytes = rng();
+	
+	// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+	var _nodeId = [
+	  _seedBytes[0] | 0x01,
+	  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
+	];
+	
+	// Per 4.2.2, randomize (14 bit) clockseq
+	var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+	
+	// Previous uuid creation time
+	var _lastMSecs = 0, _lastNSecs = 0;
+	
+	// See https://github.com/broofa/node-uuid for API details
+	function v1(options, buf, offset) {
+	  var i = buf && offset || 0;
+	  var b = buf || [];
+	
+	  options = options || {};
+	
+	  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+	
+	  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+	  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+	  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+	  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+	  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+	
+	  // Per 4.2.1.2, use count of uuid's generated during the current clock
+	  // cycle to simulate higher resolution clock
+	  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+	
+	  // Time since last uuid creation (in msecs)
+	  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+	
+	  // Per 4.2.1.2, Bump clockseq on clock regression
+	  if (dt < 0 && options.clockseq === undefined) {
+	    clockseq = clockseq + 1 & 0x3fff;
+	  }
+	
+	  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+	  // time interval
+	  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+	    nsecs = 0;
+	  }
+	
+	  // Per 4.2.1.2 Throw error if too many uuids are requested
+	  if (nsecs >= 10000) {
+	    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+	  }
+	
+	  _lastMSecs = msecs;
+	  _lastNSecs = nsecs;
+	  _clockseq = clockseq;
+	
+	  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+	  msecs += 12219292800000;
+	
+	  // `time_low`
+	  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+	  b[i++] = tl >>> 24 & 0xff;
+	  b[i++] = tl >>> 16 & 0xff;
+	  b[i++] = tl >>> 8 & 0xff;
+	  b[i++] = tl & 0xff;
+	
+	  // `time_mid`
+	  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+	  b[i++] = tmh >>> 8 & 0xff;
+	  b[i++] = tmh & 0xff;
+	
+	  // `time_high_and_version`
+	  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+	  b[i++] = tmh >>> 16 & 0xff;
+	
+	  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+	  b[i++] = clockseq >>> 8 | 0x80;
+	
+	  // `clock_seq_low`
+	  b[i++] = clockseq & 0xff;
+	
+	  // `node`
+	  var node = options.node || _nodeId;
+	  for (var n = 0; n < 6; ++n) {
+	    b[i + n] = node[n];
+	  }
+	
+	  return buf ? buf : bytesToUuid(b);
+	}
+	
+	module.exports = v1;
+
+
+/***/ },
+/* 666 */
+/*!***********************************!*\
+  !*** ./~/uuid/lib/rng-browser.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {// Unique ID creation requires a high quality random # generator.  In the
+	// browser this is a little complicated due to unknown quality of Math.random()
+	// and inconsistent support for the `crypto` API.  We do the best we can via
+	// feature-detection
+	var rng;
+	
+	var crypto = global.crypto || global.msCrypto; // for IE 11
+	if (crypto && crypto.getRandomValues) {
+	  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
+	  var rnds8 = new Uint8Array(16);
+	  rng = function whatwgRNG() {
+	    crypto.getRandomValues(rnds8);
+	    return rnds8;
+	  };
+	}
+	
+	if (!rng) {
+	  // Math.random()-based (RNG)
+	  //
+	  // If all else fails, use Math.random().  It's fast, but is of unspecified
+	  // quality.
+	  var  rnds = new Array(16);
+	  rng = function() {
+	    for (var i = 0, r; i < 16; i++) {
+	      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+	      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+	    }
+	
+	    return rnds;
+	  };
+	}
+	
+	module.exports = rng;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 667 */
+/*!***********************************!*\
+  !*** ./~/uuid/lib/bytesToUuid.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	/**
+	 * Convert array of 16 byte values to UUID string format of the form:
+	 * XXXXXXXX-XXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+	 */
+	var byteToHex = [];
+	for (var i = 0; i < 256; ++i) {
+	  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+	}
+	
+	function bytesToUuid(buf, offset) {
+	  var i = offset || 0;
+	  var bth = byteToHex;
+	  return  bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]];
+	}
+	
+	module.exports = bytesToUuid;
+
+
+/***/ },
+/* 668 */
+/*!**********************!*\
+  !*** ./~/uuid/v4.js ***!
+  \**********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var rng = __webpack_require__(/*! ./lib/rng */ 666);
+	var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 667);
+	
+	function v4(options, buf, offset) {
+	  var i = buf && offset || 0;
+	
+	  if (typeof(options) == 'string') {
+	    buf = options == 'binary' ? new Array(16) : null;
+	    options = null;
+	  }
+	  options = options || {};
+	
+	  var rnds = options.random || (options.rng || rng)();
+	
+	  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+	  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+	  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+	
+	  // Copy bytes to buffer, if provided
+	  if (buf) {
+	    for (var ii = 0; ii < 16; ++ii) {
+	      buf[i + ii] = rnds[ii];
+	    }
+	  }
+	
+	  return buf || bytesToUuid(rnds);
+	}
+	
+	module.exports = v4;
+
+
+/***/ },
+/* 669 */
+/*!**********************************************!*\
+  !*** ./src/client/components/IconTab/Tab.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Tab = undefined;
+	
+	var _getPrototypeOf = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ 476);
+	
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+	
+	var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ 502);
+	
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+	
+	var _createClass2 = __webpack_require__(/*! babel-runtime/helpers/createClass */ 503);
+	
+	var _createClass3 = _interopRequireDefault(_createClass2);
+	
+	var _possibleConstructorReturn2 = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ 507);
+	
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+	
+	var _inherits2 = __webpack_require__(/*! babel-runtime/helpers/inherits */ 554);
+	
+	var _inherits3 = _interopRequireDefault(_inherits2);
+	
+	var _class, _temp;
+	
+	var _react = __webpack_require__(/*! react */ 299);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Tab = exports.Tab = (_temp = _class = function (_Component) {
+	    (0, _inherits3.default)(Tab, _Component);
+	
+	    function Tab(props) {
+	        (0, _classCallCheck3.default)(this, Tab);
+	        return (0, _possibleConstructorReturn3.default)(this, (Tab.__proto__ || (0, _getPrototypeOf2.default)(Tab)).call(this, props));
+	    }
+	
+	    (0, _createClass3.default)(Tab, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "tab-content" },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	    return Tab;
+	}(_react.Component), _class.propTypes = {
+	    id: _react2.default.PropTypes.string.isRequired,
+	    faClassName: _react2.default.PropTypes.string.isRequired
+	}, _temp);
 
 /***/ }
 /******/ ]);

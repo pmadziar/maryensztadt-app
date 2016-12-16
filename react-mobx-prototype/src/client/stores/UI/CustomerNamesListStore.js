@@ -1,6 +1,6 @@
 import _ from "ramda";
 import {action, observable, computed} from 'mobx';
-import CustomersStore from "./CustomersStore";
+import CustomersStore from "../CustomersStore";
 
 class CustomerNamesListStore {
     @observable sort;
